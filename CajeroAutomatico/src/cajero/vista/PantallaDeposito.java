@@ -10,19 +10,18 @@ import java.awt.Color;
  *
  * @author ymala
  */
-public class PantallaRetiro extends javax.swing.JFrame {
+public class PantallaDeposito extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaRetiro.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaDeposito.class.getName());
 
     /**
-     * Creates new form PantallaRetiro
+     * Creates new form PantallaDeposito
      */
-    public PantallaRetiro() {
+    public PantallaDeposito() {
         initComponents();
         this.setSize(709, 451);
         this.pack();
         lblError.setVisible(false);
-
         
         txtMonto.setForeground(Color.GRAY);
         txtMonto.setText(" $0.00");
@@ -64,8 +63,6 @@ public class PantallaRetiro extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cajero Automático");
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(5, 31, 32));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -76,12 +73,12 @@ public class PantallaRetiro extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Serif", 1, 36)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(11, 43, 38));
-        lblTitulo.setText("Retiro");
-        jPanel2.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
+        lblTitulo.setText("Depósito");
+        jPanel2.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
 
         lblMonto.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         lblMonto.setForeground(new java.awt.Color(0, 0, 0));
-        lblMonto.setText("Monto a retirar");
+        lblMonto.setText("Monto a depositar");
         jPanel2.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         txtMonto.setBackground(new java.awt.Color(204, 204, 204));
@@ -110,7 +107,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
         lblSaldo.setText("Saldo disponible: [Monto]");
         jPanel2.add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/retiro grande.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/deposito grande.png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 300, 430));
@@ -155,7 +152,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaRetiro().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new PantallaDeposito().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

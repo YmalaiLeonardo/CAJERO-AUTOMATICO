@@ -24,11 +24,11 @@ public class PantallaLogin extends javax.swing.JFrame {
         this.pack();
         
         txtCuenta.setForeground(Color.GRAY);
-        txtCuenta.setText("Ingresa tu número de cuenta");
+        txtCuenta.setText(" Ingresa tu número de cuenta");
 
         txtCuenta.addFocusListener(new java.awt.event.FocusAdapter() {
         public void focusGained(java.awt.event.FocusEvent evt) {
-            if (txtCuenta.getText().equals("Ingresa tu número de cuenta")) {
+            if (txtCuenta.getText().equals(" Ingresa tu número de cuenta")) {
                 txtCuenta.setText("");
                 txtCuenta.setForeground(Color.BLACK);
             }
@@ -36,7 +36,7 @@ public class PantallaLogin extends javax.swing.JFrame {
         public void focusLost(java.awt.event.FocusEvent evt) {
             if (txtCuenta.getText().isEmpty()) {
                 txtCuenta.setForeground(Color.GRAY);
-                txtCuenta.setText("Ingresa tu número de cuenta");
+                txtCuenta.setText(" Ingresa tu número de cuenta");
             }
         }
    
@@ -44,11 +44,11 @@ public class PantallaLogin extends javax.swing.JFrame {
         
         txtPin.setEchoChar((char)0);
         txtPin.setForeground(Color.GRAY);
-        txtPin.setText("Ingresa tu PIN");
+        txtPin.setText(" Ingresa tu PIN");
 
         txtPin.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                if (String.valueOf(txtPin.getPassword()).equals("Ingresa tu PIN")) {
+                if (String.valueOf(txtPin.getPassword()).equals(" Ingresa tu PIN")) {
                     txtPin.setText("");
                     txtPin.setForeground(Color.BLACK);
                     txtPin.setEchoChar('•');
@@ -58,7 +58,7 @@ public class PantallaLogin extends javax.swing.JFrame {
                 if (txtPin.getPassword().length == 0) {
                     txtPin.setEchoChar((char)0);
                     txtPin.setForeground(Color.GRAY);
-                    txtPin.setText("Ingresa tu PIN");
+                    txtPin.setText(" Ingresa tu PIN");
                 }
             }
         });
