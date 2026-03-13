@@ -17,7 +17,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
-        this.setSize(900, 550);
+        this.setSize(709, 451);
         this.pack();
     }
 
@@ -42,10 +42,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         lblSaldo = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         btnRetiro = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         btnDeposito = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btnTransferencia = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cajero Automático");
@@ -61,25 +64,31 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(218, 241, 222));
+        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 3, true));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblNombre.setBackground(new java.awt.Color(5, 31, 32));
         lblNombre.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(11, 43, 38));
-        lblNombre.setText("Hola, [nombre]");
+        lblNombre.setText("Hola [nombre]");
         jPanel4.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        lblCuenta.setForeground(new java.awt.Color(0, 0, 0));
+        lblCuenta.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
+        lblCuenta.setForeground(new java.awt.Color(11, 43, 38));
         lblCuenta.setText("Cuenta: [número]");
         jPanel4.add(lblCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, 20));
 
+        btnCerrarSesion.setBackground(new java.awt.Color(142, 182, 155));
+        btnCerrarSesion.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(11, 43, 38));
         btnCerrarSesion.setText("Cerrar sesión");
         btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
-        jPanel4.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, -1, -1));
+        jPanel4.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 120, 40));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 640, 100));
 
         jPanel5.setBackground(new java.awt.Color(11, 43, 38));
+        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 56, 50), 3, true));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTituloSaldo.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
@@ -96,71 +105,105 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 640, 100));
 
         jPanel6.setBackground(new java.awt.Color(218, 241, 222));
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 3, true));
 
-        btnRetiro.setText("Retiro");
-        btnRetiro.addActionListener(this::btnRetiroActionPerformed);
+        btnRetiro.setBackground(new java.awt.Color(142, 182, 155));
+        btnRetiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/retiro g.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(11, 43, 38));
+        jLabel1.setText("Retiro");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(btnRetiro)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(btnRetiro)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(btnRetiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(42, 42, 42))
         );
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 180, 100));
 
         jPanel7.setBackground(new java.awt.Color(218, 241, 222));
+        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 3, true));
 
-        btnDeposito.setText("Depósito");
+        btnDeposito.setBackground(new java.awt.Color(142, 182, 155));
+        btnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/deposito.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(11, 43, 38));
+        jLabel2.setText("Depósito");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(btnDeposito)
-                .addGap(46, 46, 46))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(btnDeposito)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(btnDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 180, 100));
 
         jPanel8.setBackground(new java.awt.Color(218, 241, 222));
+        jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 3, true));
 
-        btnTransferencia.setText("Transferencia");
+        btnTransferencia.setBackground(new java.awt.Color(142, 182, 155));
+        btnTransferencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/transferencia.png"))); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(11, 43, 38));
+        jLabel3.setText("Transferencia");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(btnTransferencia)
-                .addGap(36, 36, 36))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(btnTransferencia))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel3)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnTransferencia)
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 270, 180, 100));
@@ -169,11 +212,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
         );
 
         pack();
@@ -182,10 +225,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
-
-    private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRetiroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,6 +256,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnDeposito;
     private javax.swing.JButton btnRetiro;
     private javax.swing.JButton btnTransferencia;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -20,7 +20,7 @@ public class PantallaLogin extends javax.swing.JFrame {
     public PantallaLogin() {
         initComponents();
         lblError.setVisible(false);
-        this.setSize(950, 550);
+        this.setSize(709, 451);
         this.pack();
         
         txtCuenta.setForeground(Color.GRAY);
@@ -109,17 +109,20 @@ public class PantallaLogin extends javax.swing.JFrame {
         lblSubtitulo.setText("Bienvenido a tu cajero virtual");
         panelCentro.add(lblSubtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
+        lblCuenta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCuenta.setForeground(new java.awt.Color(0, 0, 0));
-        lblCuenta.setText("Número de cuenta:");
+        lblCuenta.setText("Número de cuenta");
         panelCentro.add(lblCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         txtCuenta.setBackground(new java.awt.Color(204, 204, 204));
         txtCuenta.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         txtCuenta.setForeground(new java.awt.Color(153, 153, 153));
+        txtCuenta.setAlignmentX(0.0F);
         txtCuenta.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         txtCuenta.addActionListener(this::txtCuentaActionPerformed);
         panelCentro.add(txtCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 210, 30));
 
+        lblPin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPin.setForeground(new java.awt.Color(0, 0, 0));
         lblPin.setText("PIN");
         panelCentro.add(lblPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
