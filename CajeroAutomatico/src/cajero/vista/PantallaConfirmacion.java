@@ -19,11 +19,11 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         initComponents();
         this.setSize(709, 451);
         this.pack();
-        /*
+        
         lblCuentaDestino.setVisible(false);
         lblValorCuentaDestino.setVisible(false);
         lblTitular.setVisible(false);
-        lblValorTitular.setVisible(false);*/
+        lblValorTitular.setVisible(false);
         
         
     }
