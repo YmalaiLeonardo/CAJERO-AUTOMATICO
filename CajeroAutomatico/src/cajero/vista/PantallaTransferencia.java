@@ -115,6 +115,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         btnConfirmar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         btnConfirmar.setForeground(new java.awt.Color(11, 43, 38));
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(this::btnConfirmarActionPerformed);
         jPanel2.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 100, 40));
 
         btnCancelar.setBackground(new java.awt.Color(179, 179, 179));
@@ -159,8 +160,23 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        // Volver al menú principal
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.setVisible(true);
+
+        // Cerrar la pantalla de transferencia
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        // Crear y mostrar la pantalla de confirmación
+        // Abrir confirmación indicando que es transferencia
+        PantallaConfirmacion confirmacion = new PantallaConfirmacion("transferencia");
+        confirmacion.setVisible(true);
+
+        // Cerrar la pantalla de transferencia
+        this.dispose();
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments

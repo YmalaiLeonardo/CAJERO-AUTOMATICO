@@ -15,15 +15,24 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
     /**
      * Creates new form PantallaConfirmacion
      */
-    public PantallaConfirmacion() {
+    public PantallaConfirmacion(String tipoOperacion) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
         
+        // Ocultar campos de transferencia por defecto
         lblCuentaDestino.setVisible(false);
         lblValorCuentaDestino.setVisible(false);
         lblTitular.setVisible(false);
         lblValorTitular.setVisible(false);
+        
+        // Si es transferencia, muestra los campos de cuenta destino y titular
+        if (tipoOperacion != null && tipoOperacion.equals("transferencia")) {
+            lblCuentaDestino.setVisible(true);
+            lblValorCuentaDestino.setVisible(true);
+            lblTitular.setVisible(true);
+            lblValorTitular.setVisible(true);
+        }
         
         
     }
@@ -48,14 +57,14 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         lblTipoOperacion = new javax.swing.JLabel();
         lblMonto = new javax.swing.JLabel();
         lblCuentaDestino = new javax.swing.JLabel();
+        lblValorCuentaDestino = new javax.swing.JLabel();
         lblTitular = new javax.swing.JLabel();
+        lblValorTitular = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         lblValorTipoOperacion = new javax.swing.JLabel();
         lblSaldoActual = new javax.swing.JLabel();
         lblValorMonto = new javax.swing.JLabel();
-        lblValorTitular = new javax.swing.JLabel();
         lblValorFecha = new javax.swing.JLabel();
-        lblValorCuentaDestino = new javax.swing.JLabel();
         lblValorSaldo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblPregunta = new javax.swing.JLabel();
@@ -117,9 +126,17 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         lblCuentaDestino.setForeground(new java.awt.Color(22, 56, 50));
         lblCuentaDestino.setText("Cuenta destino:");
 
+        lblValorCuentaDestino.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
+        lblValorCuentaDestino.setForeground(new java.awt.Color(22, 56, 50));
+        lblValorCuentaDestino.setText("[cuenta]");
+
         lblTitular.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         lblTitular.setForeground(new java.awt.Color(22, 56, 50));
         lblTitular.setText("Titular:");
+
+        lblValorTitular.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
+        lblValorTitular.setForeground(new java.awt.Color(22, 56, 50));
+        lblValorTitular.setText("[titular]");
 
         lblFecha.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(22, 56, 50));
@@ -137,17 +154,9 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         lblValorMonto.setForeground(new java.awt.Color(22, 56, 50));
         lblValorMonto.setText("[Monto]");
 
-        lblValorTitular.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
-        lblValorTitular.setForeground(new java.awt.Color(22, 56, 50));
-        lblValorTitular.setText("[titular]");
-
         lblValorFecha.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
         lblValorFecha.setForeground(new java.awt.Color(22, 56, 50));
         lblValorFecha.setText("[fecha]");
-
-        lblValorCuentaDestino.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
-        lblValorCuentaDestino.setForeground(new java.awt.Color(22, 56, 50));
-        lblValorCuentaDestino.setText("[cuenta]");
 
         lblValorSaldo.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
         lblValorSaldo.setForeground(new java.awt.Color(22, 56, 50));
@@ -275,7 +284,7 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaConfirmacion().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new PantallaConfirmacion("").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

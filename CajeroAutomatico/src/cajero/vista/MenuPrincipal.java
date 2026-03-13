@@ -109,6 +109,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnRetiro.setBackground(new java.awt.Color(142, 182, 155));
         btnRetiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/retiro g.png"))); // NOI18N
+        btnRetiro.addActionListener(this::btnRetiroActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(11, 43, 38));
@@ -144,6 +145,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnDeposito.setBackground(new java.awt.Color(142, 182, 155));
         btnDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/deposito.png"))); // NOI18N
+        btnDeposito.addActionListener(this::btnDepositoActionPerformed);
 
         jLabel2.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(11, 43, 38));
@@ -177,6 +179,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnTransferencia.setBackground(new java.awt.Color(142, 182, 155));
         btnTransferencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/transferencia.png"))); // NOI18N
+        btnTransferencia.addActionListener(this::btnTransferenciaActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Serif", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(11, 43, 38));
@@ -223,8 +226,40 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        // TODO add your handling code here:
+        // Crear y mostrar la pantalla de cierre de sesión
+        PantallaCierre cierre = new PantallaCierre();
+        cierre.setVisible(true);
+
+        // Cerrar el menú actual
+        this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroActionPerformed
+        // Crear y mostrar la pantalla de retiro
+        PantallaRetiro retiro = new PantallaRetiro();
+        retiro.setVisible(true);
+
+        // Cerrar el menú actual
+        this.dispose();
+    }//GEN-LAST:event_btnRetiroActionPerformed
+
+    private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
+        // Crear y mostrar la pantalla de depósito
+        PantallaDeposito deposito = new PantallaDeposito();
+        deposito.setVisible(true);
+
+        // Cerrar el menú actual
+        this.dispose();
+    }//GEN-LAST:event_btnDepositoActionPerformed
+
+    private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
+        // Crear y mostrar la pantalla de transferencia
+        PantallaTransferencia transferencia = new PantallaTransferencia();
+        transferencia.setVisible(true);
+
+        // Cerrar el menú actual
+        this.dispose();
+    }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     /**
      * @param args the command line arguments

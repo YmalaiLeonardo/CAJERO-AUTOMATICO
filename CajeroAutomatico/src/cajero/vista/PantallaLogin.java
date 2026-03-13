@@ -137,6 +137,7 @@ public class PantallaLogin extends javax.swing.JFrame {
         btnIngresar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(this::btnIngresarActionPerformed);
         panelCentro.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
         lblError.setForeground(new java.awt.Color(149, 18, 44));
@@ -156,6 +157,12 @@ public class PantallaLogin extends javax.swing.JFrame {
     private void txtCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCuentaActionPerformed
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments

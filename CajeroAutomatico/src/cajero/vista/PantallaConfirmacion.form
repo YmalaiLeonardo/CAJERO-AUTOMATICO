@@ -283,6 +283,17 @@
                     <Property name="text" type="java.lang.String" value="Cuenta destino:"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="lblValorCuentaDestino">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Serif" size="12" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="32" green="38" red="16" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="[cuenta]"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JLabel" name="lblTitular">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -292,6 +303,17 @@
                       <Color blue="32" green="38" red="16" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Titular:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblValorTitular">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Serif" size="12" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="32" green="38" red="16" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="[titular]"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblFecha">
@@ -338,17 +360,6 @@
                     <Property name="text" type="java.lang.String" value="[Monto]"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblValorTitular">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Serif" size="12" style="1"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="32" green="38" red="16" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="[titular]"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="lblValorFecha">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -358,17 +369,6 @@
                       <Color blue="32" green="38" red="16" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="[fecha]"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lblValorCuentaDestino">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Serif" size="12" style="1"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="32" green="38" red="16" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="[cuenta]"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblValorSaldo">
