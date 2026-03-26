@@ -1,10 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package cajero.vista;
 
+import cajero.modelo.Usuario;
+import cajero.servicio.AuthService;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -117,6 +117,7 @@ public class PantallaLogin extends javax.swing.JFrame {
         txtCuenta.setBackground(new java.awt.Color(204, 204, 204));
         txtCuenta.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         txtCuenta.setForeground(new java.awt.Color(153, 153, 153));
+        txtCuenta.setToolTipText("Ingrese sus 8 dígitos");
         txtCuenta.setAlignmentX(0.0F);
         txtCuenta.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         txtCuenta.addActionListener(this::txtCuentaActionPerformed);
@@ -130,7 +131,13 @@ public class PantallaLogin extends javax.swing.JFrame {
         txtPin.setBackground(new java.awt.Color(204, 204, 204));
         txtPin.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         txtPin.setForeground(new java.awt.Color(153, 153, 153));
+        txtPin.setToolTipText("Ingrese su PIN");
         txtPin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
+        txtPin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPinKeyTyped(evt);
+            }
+        });
         panelCentro.add(txtPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 30));
 
         btnIngresar.setBackground(new java.awt.Color(22, 56, 50));
@@ -159,10 +166,53 @@ public class PantallaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCuentaActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setVisible(true);
-        this.dispose();
+
+        String cuenta = txtCuenta.getText();
+        String pin = new String(txtPin.getPassword()); // Para JPasswordField
+
+        // REGLA DE ORO: Validar los 8 dígitos
+        // "\\d{8}" significa: solo números y que sean exactamente 8
+        if (!cuenta.matches("\\d{8}")) {
+            JOptionPane.showMessageDialog(this, 
+                "El número de cuenta debe tener exactamente 8 dígitos numéricos.", 
+                "Error de formato", 
+                JOptionPane.WARNING_MESSAGE);
+            return; // Detenemos el proceso aquí mismo
+        }
+        
+        // Validar PIN (Exactamente 4 dígitos)
+        // El regex "\\d{4}" obliga a que sean solo números y solo cuatro
+        if (!pin.matches("\\d{4}")) {
+            JOptionPane.showMessageDialog(this, "El PIN debe ser de exactamente 4 dígitos.");
+            return;
+        }
+        
+        AuthService auth = new AuthService();
+        Usuario user = auth.login(cuenta, pin);
+
+        if (user != null) {
+            // SI EL LOGIN ES EXITOSO:
+            MenuPrincipal menu = new MenuPrincipal(user); // Pasamos el usuario a la siguiente pantalla
+            menu.setVisible(true);
+            this.dispose(); // Cerramos el login
+        } else {
+            // SI FALLA:
+            int intentos = auth.getIntentosRestantes();
+            if (intentos == 0) {
+                new PantallaBloqueada().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos. Intentos restantes: " + intentos);
+            }
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void txtPinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPinKeyTyped
+        // Si ya hay 4 caracteres o si lo que presiona no es un número, lo ignora
+        if (txtPin.getPassword().length >= 4 || !Character.isDigit(evt.getKeyChar())) {
+            evt.consume(); 
+        }
+    }//GEN-LAST:event_txtPinKeyTyped
 
     /**
      * @param args the command line arguments

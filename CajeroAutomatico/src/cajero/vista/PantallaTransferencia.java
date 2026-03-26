@@ -4,7 +4,9 @@
  */
 package cajero.vista;
 
+import cajero.modelo.Usuario;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,11 +19,15 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     /**
      * Creates new form PantallaTransferencia
      */
-    public PantallaTransferencia() {
+    
+    private Usuario usuarioSesion;
+    
+    public PantallaTransferencia(Usuario user) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
         lblError.setVisible(false);
+        this.usuarioSesion = user;
         
         txtCuentaDestino.setForeground(Color.GRAY);
         txtCuentaDestino.setText(" Ingresa el número de cuenta destino");
@@ -161,7 +167,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // Volver al menú principal
-        MenuPrincipal menu = new MenuPrincipal();
+        MenuPrincipal menu = new MenuPrincipal(usuarioSesion);
         menu.setVisible(true);
 
         // Cerrar la pantalla de transferencia
@@ -171,37 +177,31 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // Crear y mostrar la pantalla de confirmación
         // Abrir confirmación indicando que es transferencia
-        PantallaConfirmacion confirmacion = new PantallaConfirmacion("transferencia");
-        confirmacion.setVisible(true);
+        try {
+            double monto = Double.parseDouble(txtMonto.getText());
+            String cuentaDestino = txtCuentaDestino.getText(); // Asegúrate de tener este campo
 
+            if (monto <= 0 || cuentaDestino.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Datos incompletos o monto no válido.");
+                return;
+            }
+
+            // Abrimos la confirmación pasando los datos requeridos
+            // Nota: Si tu constructor solo acepta (String, Usuario, double), 
+            // podrías guardar la cuenta destino en una variable estática o ampliar el constructor.
+            PantallaConfirmacion confirmacion = new PantallaConfirmacion("transferencia", usuarioSesion, monto);
+            confirmacion.setVisible(true);
+
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un monto numérico válido.");
+        }
         // Cerrar la pantalla de transferencia
         this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaTransferencia().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

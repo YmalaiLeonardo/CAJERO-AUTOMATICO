@@ -179,7 +179,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblSaldo">
+            <Component class="javax.swing.JLabel" name="lblSaldoDisponible">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Serif" size="14" style="0"/>

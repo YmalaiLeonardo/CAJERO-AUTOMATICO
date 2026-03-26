@@ -4,6 +4,9 @@
  */
 package cajero.vista;
 
+import cajero.bd.CuentaDAO;
+import cajero.modelo.Usuario;
+
 /**
  *
  * @author ymala
@@ -11,14 +14,25 @@ package cajero.vista;
 public class MenuPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
-
+    private Usuario usuarioSesion;
     /**
      * Creates new form MenuPrincipal
      */
-    public MenuPrincipal() {
+    public MenuPrincipal(Usuario user) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
+        this.usuarioSesion = user;
+        
+        actualizarPantalla();
+    }
+    
+    private void actualizarPantalla() {
+        lblNombre.setText("Bienvenido/a, " + usuarioSesion.getNombre());
+        lblCuenta.setText("Cuenta: " + usuarioSesion.getNumeroCuenta());
+        CuentaDAO dao = new CuentaDAO();
+        double saldoActual = dao.obtenerSaldo(usuarioSesion.getId());
+        lblSaldo.setText(String.format("$ %.2f", saldoActual));
     }
 
     /**
@@ -236,7 +250,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroActionPerformed
         // Crear y mostrar la pantalla de retiro
-        PantallaRetiro retiro = new PantallaRetiro();
+        PantallaRetiro retiro = new PantallaRetiro(usuarioSesion);
         retiro.setVisible(true);
 
         // Cerrar el menú actual
@@ -245,7 +259,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositoActionPerformed
         // Crear y mostrar la pantalla de depósito
-        PantallaDeposito deposito = new PantallaDeposito();
+        PantallaDeposito deposito = new PantallaDeposito(usuarioSesion);
         deposito.setVisible(true);
 
         // Cerrar el menú actual
@@ -254,37 +268,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
         // Crear y mostrar la pantalla de transferencia
-        PantallaTransferencia transferencia = new PantallaTransferencia();
+        PantallaTransferencia transferencia = new PantallaTransferencia(usuarioSesion);
         transferencia.setVisible(true);
 
         // Cerrar el menú actual
         this.dispose();
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MenuPrincipal().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;

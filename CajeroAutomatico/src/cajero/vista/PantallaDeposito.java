@@ -4,7 +4,10 @@
  */
 package cajero.vista;
 
+import cajero.bd.CuentaDAO;
+import cajero.modelo.Usuario;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,11 +20,14 @@ public class PantallaDeposito extends javax.swing.JFrame {
     /**
      * Creates new form PantallaDeposito
      */
-    public PantallaDeposito() {
+    private Usuario usuarioSesion;
+    
+    public PantallaDeposito(Usuario user) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
         lblError.setVisible(false);
+        this.usuarioSesion = user;
         
         txtMonto.setForeground(Color.GRAY);
         txtMonto.setText(" $0.00");
@@ -129,7 +135,7 @@ public class PantallaDeposito extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // Volver al menú principal
-        MenuPrincipal menu = new MenuPrincipal();
+        MenuPrincipal menu = new MenuPrincipal(usuarioSesion);
         menu.setVisible(true);
 
         // Cerrar la pantalla de depósito
@@ -137,38 +143,30 @@ public class PantallaDeposito extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // Abrir confirmación indicando que es depósito
-        PantallaConfirmacion confirmacion = new PantallaConfirmacion("deposito");
-        confirmacion.setVisible(true);
+        try {
+            double monto = Double.parseDouble(txtMonto.getText());
 
+            if (monto <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingrese un monto válido.");
+                return;
+            }
+
+            // Abrimos la pantalla de confirmación pasando: Usuario, Monto y Tipo de operación
+            // Asegúrate de que tu PantallaConfirmacion acepte estos parámetros
+            PantallaConfirmacion confirmar = new PantallaConfirmacion("deposito", usuarioSesion, monto);
+            confirmar.setVisible(true);
+
+            this.dispose(); // Cerramos la pantalla de captura
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese solo números.");
+        }
+        
         // Cerrar la pantalla de depósito
         this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaDeposito().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

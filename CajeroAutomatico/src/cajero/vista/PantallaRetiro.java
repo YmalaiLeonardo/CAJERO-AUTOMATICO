@@ -4,7 +4,10 @@
  */
 package cajero.vista;
 
+import cajero.bd.CuentaDAO;
+import cajero.modelo.Usuario;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,11 +20,14 @@ public class PantallaRetiro extends javax.swing.JFrame {
     /**
      * Creates new form PantallaRetiro
      */
-    public PantallaRetiro() {
+    private Usuario usuarioSesion;
+    
+    public PantallaRetiro(Usuario user) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
         lblError.setVisible(false);
+        this.usuarioSesion = user;
 
         
         txtMonto.setForeground(Color.GRAY);
@@ -41,6 +47,18 @@ public class PantallaRetiro extends javax.swing.JFrame {
                 }
             }
         });
+        
+        mostrarSaldo(); // Llamamos a la función para mostrar el dinero
+        
+        
+    }
+    
+    private void mostrarSaldo() {
+        CuentaDAO dao = new CuentaDAO();
+        double saldo = dao.obtenerSaldo(usuarioSesion.getId());
+
+        // Formateamos el texto para que se vea profesional
+        lblSaldoDisponible.setText("Saldo disponible: $ " + String.format("%.2f", saldo));
     }
 
     /**
@@ -60,7 +78,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
         lblError = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblSaldo = new javax.swing.JLabel();
+        lblSaldoDisponible = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,10 +124,10 @@ public class PantallaRetiro extends javax.swing.JFrame {
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
         jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 90, 40));
 
-        lblSaldo.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
-        lblSaldo.setForeground(new java.awt.Color(22, 56, 50));
-        lblSaldo.setText("Saldo disponible: [Monto]");
-        jPanel2.add(lblSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
+        lblSaldoDisponible.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
+        lblSaldoDisponible.setForeground(new java.awt.Color(22, 56, 50));
+        lblSaldoDisponible.setText("Saldo disponible: [Monto]");
+        jPanel2.add(lblSaldoDisponible, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/retiro grande.png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
@@ -132,7 +150,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // Volver al menú principal
-        MenuPrincipal menu = new MenuPrincipal();
+        MenuPrincipal menu = new MenuPrincipal(usuarioSesion);
         menu.setVisible(true);
 
         // Cerrar la pantalla de retiro
@@ -140,38 +158,33 @@ public class PantallaRetiro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // Abrir confirmación indicando que es retiro
-        PantallaConfirmacion confirmacion = new PantallaConfirmacion("retiro");
-        confirmacion.setVisible(true);
+        try {
+            // 1. Primero obtenemos el monto del texto
+            double monto = Double.parseDouble(txtMonto.getText());
+
+            // 2. Validamos que sea un monto lógico
+            if (monto <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingrese un monto válido.");
+                return;
+            }
+
+            // 3. AHORA SÍ, abrimos la confirmación con los datos listos
+            // Pasamos: tipo ("retiro"), el usuario y el monto capturado
+            PantallaConfirmacion confirmacion = new PantallaConfirmacion("retiro", usuarioSesion, monto);
+            confirmacion.setVisible(true);
+
+            // 4. Cerramos esta pantalla
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.");
+        }
         
         // Cerrar la pantalla de retiro
         this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaRetiro().setVisible(true));
-    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -181,7 +194,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblMonto;
-    private javax.swing.JLabel lblSaldo;
+    private javax.swing.JLabel lblSaldoDisponible;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
