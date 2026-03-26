@@ -147,8 +147,11 @@ public class PantallaLogin extends javax.swing.JFrame {
         btnIngresar.addActionListener(this::btnIngresarActionPerformed);
         panelCentro.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
+        lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblError.setForeground(new java.awt.Color(149, 18, 44));
-        panelCentro.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblError.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        panelCentro.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 210, 30));
 
         icono.setBackground(new java.awt.Color(11, 43, 38));
         icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/office-building.png"))); // NOI18N
@@ -173,17 +176,16 @@ public class PantallaLogin extends javax.swing.JFrame {
         // REGLA DE ORO: Validar los 8 dígitos
         // "\\d{8}" significa: solo números y que sean exactamente 8
         if (!cuenta.matches("\\d{8}")) {
-            JOptionPane.showMessageDialog(this, 
-                "El número de cuenta debe tener exactamente 8 dígitos numéricos.", 
-                "Error de formato", 
-                JOptionPane.WARNING_MESSAGE);
-            return; // Detenemos el proceso aquí mismo
+            lblError.setText("<html>El número de cuenta debe tener<br>exactamente 8 dígitos numéricos.</html>");
+            lblError.setVisible(true);
+            return;
         }
         
         // Validar PIN (Exactamente 4 dígitos)
         // El regex "\\d{4}" obliga a que sean solo números y solo cuatro
         if (!pin.matches("\\d{4}")) {
-            JOptionPane.showMessageDialog(this, "El PIN debe ser de exactamente 4 dígitos.");
+            lblError.setText("<html>El PIN debe ser de exactamente 4 dígitos.</html>");
+            lblError.setVisible(true);
             return;
         }
         
@@ -191,18 +193,27 @@ public class PantallaLogin extends javax.swing.JFrame {
         Usuario user = auth.login(cuenta, pin);
 
         if (user != null) {
-            // SI EL LOGIN ES EXITOSO:
-            MenuPrincipal menu = new MenuPrincipal(user); // Pasamos el usuario a la siguiente pantalla
+            // Login exitoso
+            MenuPrincipal menu = new MenuPrincipal(user);
             menu.setVisible(true);
-            this.dispose(); // Cerramos el login
+            this.dispose();
         } else {
-            // SI FALLA:
-            int intentos = auth.getIntentosRestantes();
-            if (intentos == 0) {
-                new PantallaBloqueada().setVisible(true);
-                this.dispose();
+            // Login fallido
+            Usuario usuarioTemp = auth.buscarUsuarioParaLogin(cuenta);
+
+            if (usuarioTemp != null) {
+                int intentos = auth.getIntentosFallidosBD(usuarioTemp.getId());
+
+                if (intentos >= 3) {
+                    new PantallaBloqueada().setVisible(true);
+                    this.dispose();
+                } else {
+                    lblError.setText("Datos incorrectos. Intentos restantes: " + (3 - intentos));
+                    lblError.setVisible(true);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Datos incorrectos. Intentos restantes: " + intentos);
+                lblError.setText("Usuario no encontrado.");
+                lblError.setVisible(true);
             }
         }
     }//GEN-LAST:event_btnIngresarActionPerformed

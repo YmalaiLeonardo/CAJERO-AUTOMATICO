@@ -4,6 +4,10 @@
  */
 package cajero.vista;
 
+import cajero.bd.CuentaDAO;
+import cajero.modelo.Cuenta;
+import cajero.modelo.Retiro;
+import cajero.modelo.Transferencia;
 import cajero.modelo.Usuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -114,7 +118,8 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         txtCuentaDestino.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         jPanel2.add(txtCuentaDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 250, 40));
 
-        lblError.setForeground(new java.awt.Color(51, 0, 0));
+        lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblError.setForeground(new java.awt.Color(149, 18, 44));
         jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 250, 20));
 
         btnConfirmar.setBackground(new java.awt.Color(142, 182, 155));
@@ -175,30 +180,62 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // Crear y mostrar la pantalla de confirmación
-        // Abrir confirmación indicando que es transferencia
         try {
             double monto = Double.parseDouble(txtMonto.getText());
-            String cuentaDestino = txtCuentaDestino.getText(); // Asegúrate de tener este campo
+            String numeroDestino = txtCuentaDestino.getText();
 
-            if (monto <= 0 || cuentaDestino.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Datos incompletos o monto no válido.");
+            System.out.println("Monto ingresado: " + monto);
+            System.out.println("Número destino: " + numeroDestino);
+
+            if (monto <= 0) {
+                lblError.setText("Ingrese un monto válido.");
                 return;
             }
 
-            // Abrimos la confirmación pasando los datos requeridos
-            // Nota: Si tu constructor solo acepta (String, Usuario, double), 
-            // podrías guardar la cuenta destino en una variable estática o ampliar el constructor.
-            PantallaConfirmacion confirmacion = new PantallaConfirmacion("transferencia", usuarioSesion, monto);
-            confirmacion.setVisible(true);
+            CuentaDAO cuentaDAO = new CuentaDAO();
+            Cuenta cuentaDestino = cuentaDAO.buscarCuentaPorNumero(txtCuentaDestino.getText());
+            if (cuentaDestino == null) {
+                lblError.setText("Cuenta destino no encontrada.");
+                return;
+            }
+            
+            System.out.println("Cuenta destino: id=" + cuentaDestino.getId() +
+                               ", usuario=" + cuentaDestino.getIdUsuario() +
+                               ", saldo=" + cuentaDestino.getSaldo() +
+                               ", numeroCuenta=" + cuentaDestino.getNumeroCuenta());
+            
+            System.out.println("Cuenta destino encontrada: " + cuentaDestino);
 
-            this.dispose();
+            
+
+            if (cuentaDestino.getId() == usuarioSesion.getCuenta().getId()) {
+                lblError.setText("No puede transferir a su propia cuenta.");
+                return;
+            }
+
+            Transferencia transferencia = new Transferencia(
+                usuarioSesion.getCuenta().getId(),
+                monto,
+                cuentaDestino
+            );
+
+            boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
+            System.out.println("Resultado de ejecutar transferencia: " + exito);
+
+            if (exito) {
+                double saldoActual = usuarioSesion.getCuenta().getSaldo();
+                new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
+                this.dispose(); // cerrar solo si fue exitosa
+            } else {
+                lblError.setText("Saldo insuficiente o monto inválido.");
+            }
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un monto numérico válido.");
+            lblError.setText("Ingrese valores numéricos válidos.");
+            e.printStackTrace();
         }
-        // Cerrar la pantalla de transferencia
-        this.dispose();
+        
+
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     

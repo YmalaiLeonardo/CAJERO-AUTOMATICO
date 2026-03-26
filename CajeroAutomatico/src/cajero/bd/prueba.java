@@ -16,13 +16,14 @@ public class prueba {
             System.out.println("LA CONEXIÓN FALLÓ.");
         }
         
-        String pin = "1234";
+        String pin = "5698"; 
         String salt = HashUtil.generarSalt();
         String hash = HashUtil.hashPin(pin, salt);
 
         System.out.println("Copia esto en pin_salt: " + salt);
         System.out.println("Copia esto en pin_hash: " + hash);
     }
-    
+    //estacalante 56231020-5698
+    //manuel 10203050-7894
     
 }

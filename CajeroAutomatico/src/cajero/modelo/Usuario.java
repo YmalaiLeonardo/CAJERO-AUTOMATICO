@@ -14,6 +14,7 @@ public class Usuario {
     private String pinHash;
     private String pinSalt;
     private boolean bloqueado;
+
     
     // Constructor vacío
     public Usuario() {}
@@ -51,4 +52,10 @@ public class Usuario {
     
     public boolean isBloqueado() { return bloqueado; }
     public void setBloqueado(boolean bloqueado) { this.bloqueado = bloqueado; }
+
+    private Cuenta cuenta; // relación con la cuenta del usuario
+    public Cuenta getCuenta() {return cuenta;}
+    public void setCuenta(Cuenta cuenta) { this.cuenta = cuenta;}
+        
+    
 }

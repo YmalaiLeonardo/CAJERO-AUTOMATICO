@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cajero.bd;
+import cajero.modelo.Cuenta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,5 +67,27 @@ public class CuentaDAO {
         }
     }
     
+    // MÉTODO 4: Buscar una cuenta por su número de cuenta
+    public Cuenta buscarCuentaPorNumero(String numeroCuenta) {
+        String sql = "SELECT id, id_usuario, saldo, numeroCuenta FROM cuentas WHERE numeroCuenta = ?";
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, numeroCuenta);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Cuenta(
+                    rs.getInt("id"),
+                    rs.getInt("id_usuario"),
+                    rs.getDouble("saldo"),
+                    rs.getString("numeroCuenta")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar cuenta: " + e.getMessage());
+        }
+        return null;
+    }
     
 }

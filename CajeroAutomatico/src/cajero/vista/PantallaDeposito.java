@@ -5,6 +5,9 @@
 package cajero.vista;
 
 import cajero.bd.CuentaDAO;
+import cajero.modelo.Cuenta;
+import cajero.modelo.Deposito;
+import cajero.modelo.Retiro;
 import cajero.modelo.Usuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -92,8 +95,9 @@ public class PantallaDeposito extends javax.swing.JFrame {
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, 40));
 
-        lblError.setForeground(new java.awt.Color(51, 0, 0));
-        jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 260, 240, -1));
+        lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblError.setForeground(new java.awt.Color(149, 18, 44));
+        jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 260, 240, 50));
 
         btnConfirmar.setBackground(new java.awt.Color(142, 182, 155));
         btnConfirmar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
@@ -143,27 +147,22 @@ public class PantallaDeposito extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        try {
-            double monto = Double.parseDouble(txtMonto.getText());
-
-            if (monto <= 0) {
-                JOptionPane.showMessageDialog(this, "Ingrese un monto válido.");
-                return;
-            }
-
-            // Abrimos la pantalla de confirmación pasando: Usuario, Monto y Tipo de operación
-            // Asegúrate de que tu PantallaConfirmacion acepte estos parámetros
-            PantallaConfirmacion confirmar = new PantallaConfirmacion("deposito", usuarioSesion, monto);
-            confirmar.setVisible(true);
-
-            this.dispose(); // Cerramos la pantalla de captura
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese solo números.");
-        }
+        double monto = Double.parseDouble(txtMonto.getText());
         
-        // Cerrar la pantalla de depósito
+        Deposito deposito = new Deposito(usuarioSesion.getCuenta().getId(), monto);
+        boolean exito = deposito.ejecutar(usuarioSesion.getCuenta());
+
+        if (exito) {
+            double saldoActual = usuarioSesion.getCuenta().getSaldo();
+            new PantallaConfirmacion(deposito, usuarioSesion, saldoActual).setVisible(true);
+            this.dispose();
+        } else {
+            lblError.setText("Monto inválido");
+        }
+        // Cerrar la pantalla de retiro
         this.dispose();
+        
+        
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     

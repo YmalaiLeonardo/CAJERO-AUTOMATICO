@@ -63,7 +63,7 @@ public class CuentaService {
         return cuenta.getSaldo();
     }
     
-    // Verifica si una cuenta existe en la lista de cuentas
+    /*// Verifica si una cuenta existe en la lista de cuentas
     // Por ahora con datos simulados, después vendrá de la BD
     public Cuenta buscarCuentaPorNumero(String numeroCuenta) {
         
@@ -77,5 +77,5 @@ public class CuentaService {
         
         // Si no encuentra la cuenta retorna null
         return null;
-    }
+    }*/
 }

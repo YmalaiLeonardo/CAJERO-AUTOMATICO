@@ -127,7 +127,12 @@ public class PantallaCierre extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverFocusGained
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
+        // Abrir la pantalla de login
+        PantallaLogin login = new PantallaLogin();
+        login.setVisible(true);
+
+        // Cerrar la pantalla actual
+        this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**

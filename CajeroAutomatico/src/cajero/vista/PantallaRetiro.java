@@ -5,6 +5,8 @@
 package cajero.vista;
 
 import cajero.bd.CuentaDAO;
+import cajero.modelo.Cuenta;
+import cajero.modelo.Retiro;
 import cajero.modelo.Usuario;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -107,8 +109,10 @@ public class PantallaRetiro extends javax.swing.JFrame {
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, 40));
 
-        lblError.setForeground(new java.awt.Color(51, 0, 0));
-        jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 260, 240, -1));
+        lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblError.setForeground(new java.awt.Color(149, 18, 44));
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 260, 240, 50));
 
         btnConfirmar.setBackground(new java.awt.Color(142, 182, 155));
         btnConfirmar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
@@ -158,28 +162,19 @@ public class PantallaRetiro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        try {
-            // 1. Primero obtenemos el monto del texto
-            double monto = Double.parseDouble(txtMonto.getText());
+        double monto = Double.parseDouble(txtMonto.getText());
 
-            // 2. Validamos que sea un monto lógico
-            if (monto <= 0) {
-                JOptionPane.showMessageDialog(this, "Ingrese un monto válido.");
-                return;
-            }
+        // Usar la cuenta del usuario en sesión
+        Retiro retiro = new Retiro(usuarioSesion.getCuenta().getId(), monto);
+        boolean exito = retiro.ejecutar((Cuenta) usuarioSesion.getCuenta());
 
-            // 3. AHORA SÍ, abrimos la confirmación con los datos listos
-            // Pasamos: tipo ("retiro"), el usuario y el monto capturado
-            PantallaConfirmacion confirmacion = new PantallaConfirmacion("retiro", usuarioSesion, monto);
-            confirmacion.setVisible(true);
-
-            // 4. Cerramos esta pantalla
-            this.dispose();
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido.");
+        if (exito) {
+            double saldoActual = usuarioSesion.getCuenta().getSaldo();
+            new PantallaConfirmacion(retiro, usuarioSesion, saldoActual).setVisible(true);
+            this.dispose(); // cerrar la pantalla actual si quieres
+        } else {
+            lblError.setText("<html>Saldo insuficiente o monto inválido</html>");
         }
-        
         // Cerrar la pantalla de retiro
         this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed

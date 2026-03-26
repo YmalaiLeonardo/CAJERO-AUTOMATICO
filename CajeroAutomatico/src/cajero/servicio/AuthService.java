@@ -32,31 +32,35 @@ public class AuthService {
     public boolean validarPin(String pinIngresado, Usuario usuario) {
         
         // 1. Verificar si ya está bloqueado en el objeto 
-        if (usuario.isBloqueado()) {
-            return false;
-        }
-        
-        // 2. Verificar el PIN usando tu HashUtil
+        /*if (usuario.isBloqueado()) {
+            return false; // si está bloqueado, no permitir login
+        }*/
+
+        //2. Verificar el PIN usando tu HashUtil
         boolean pinCorrecto = HashUtil.verificarPin(
-            pinIngresado, 
-            usuario.getPinHash(), 
-            usuario.getPinSalt()
+            pinIngresado, usuario.getPinHash(), usuario.getPinSalt()
         );
-        
+
         if (pinCorrecto) {
-            intentosFallidos = 0;
+            // Si el PIN es correcto, reinicia intentos y desbloquea
+            usuarioDAO.resetearIntentos(usuario.getId());
+            usuarioDAO.actualizarEstadoBloqueo(usuario.getId(), false); 
+            usuario.setBloqueado(false); 
             return true;
         } else {
-            intentosFallidos++;
-            
-            if (intentosFallidos >= MAX_INTENTOS) {
-                // CAMBIO CLAVE: Actualizamos el objeto Y la base de datos
+            // Si el PIN es incorrecto, incrementa intentos
+            usuarioDAO.incrementarIntentos(usuario.getId()); 
+            int intentos = usuarioDAO.obtenerIntentos(usuario.getId()); 
+
+            if (intentos >= MAX_INTENTOS) {
+                usuarioDAO.actualizarEstadoBloqueo(usuario.getId(), true); // bloquea
                 usuario.setBloqueado(true);
-                usuarioDAO.actualizarEstadoBloqueo(usuario.getId(), true); 
-                System.out.println("Usuario bloqueado en BD.");
             }
-            return false;
+            return false;// importante: aquí debe devolver false
+            
+            
         }
+       
     }
     
     // Método extra para el Login inicial
@@ -78,12 +82,16 @@ public class AuthService {
         }
 
         // 2. Usamos el método que ya tenías para validar el PIN
-        boolean esValido = validarPin(pinIngresado, usuario);
+        boolean valido  = validarPin(pinIngresado, usuario);
 
-        if (esValido) {
-            return usuario; // Login exitoso
+        if (valido) {
+            return usuarioDAO.obtenerUsuarioPorCuenta(numeroCuenta);
         } else {
             return null; // PIN incorrecto o Bloqueado
         }
+    }
+    
+    public int getIntentosFallidosBD(int idUsuario) {
+        return usuarioDAO.obtenerIntentos(idUsuario);
     }
 }

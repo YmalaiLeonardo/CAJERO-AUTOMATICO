@@ -7,18 +7,17 @@ package cajero.modelo;
  */
 public class Cuenta {
     //Atributos privados que representan los datos de la cuenta
-    private int id;
+    private int id;              // usa int, no Integer
     private int idUsuario;
     private double saldo;
-    
-    // Constructor vacío
-    public Cuenta() {}
+    private String numeroCuenta;
     
     // Constructor con todos los atributos
-    public Cuenta(int id, int idUsuario, double saldo) {
+    public Cuenta(int id, int idUsuario, double saldo, String numeroCuenta) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.saldo = saldo;
+        this.numeroCuenta = numeroCuenta;
     }
     
     // Getters y Setters
@@ -30,6 +29,8 @@ public class Cuenta {
     
     public double getSaldo() { return saldo; }
     public void setSaldo(double saldo) { this.saldo = saldo; }
+    
+    public String getNumeroCuenta() { return numeroCuenta; }
     
     // Método para depositar dinero a la cuenta
     public void depositar(double monto) {

@@ -125,8 +125,11 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblError">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="10" style="1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="33" type="rgb"/>
+                  <Color blue="2c" green="12" red="95" type="rgb"/>
                 </Property>
               </Properties>
               <Constraints>

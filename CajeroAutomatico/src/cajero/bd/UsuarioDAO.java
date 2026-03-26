@@ -38,16 +38,59 @@ public class UsuarioDAO {
     }
     
     public void actualizarEstadoBloqueo(int idUsuario, boolean bloqueado) {
-    String sql = "UPDATE usuarios SET bloqueado = ? WHERE id = ?";
-    try (Connection con = ConexionBD.conectar();
-         PreparedStatement ps = con.prepareStatement(sql)) {
-        
-        ps.setBoolean(1, bloqueado);
-        ps.setInt(2, idUsuario);
-        ps.executeUpdate();
-        
-    } catch (SQLException e) {
-        System.err.println("Error al actualizar bloqueo: " + e.getMessage());
+        String sql = "UPDATE usuarios SET bloqueado = ? WHERE id = ?";
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, bloqueado ? 1 : 0);
+            ps.setInt(2, idUsuario);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar estado de bloqueo: " + e.getMessage());
+        }
     }
-}
+    
+    public void incrementarIntentos(int idUsuario) {
+        String sql = "UPDATE usuarios SET intentos_fallidos = intentos_fallidos + 1 WHERE id = ?";
+        try (Connection con = ConexionBD.conectar();   // usa el mismo método que en los otros
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Error al incrementar intentos: " + e.getMessage());
+        }
+    }
+    
+    public void resetearIntentos(int idUsuario) {
+        String sql = "UPDATE usuarios SET intentos_fallidos = 0 WHERE id = ?";
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Error al resetear intentos: " + e.getMessage());
+        }
+    }
+
+    public int obtenerIntentos(int idUsuario) {
+        String sql = "SELECT intentos_fallidos FROM usuarios WHERE id = ?";
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("intentos_fallidos");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener intentos: " + e.getMessage());
+        }
+        return 0;
+    }
+
 }

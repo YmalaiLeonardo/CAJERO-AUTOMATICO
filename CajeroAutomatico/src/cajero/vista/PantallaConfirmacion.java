@@ -4,7 +4,9 @@
  */
 package cajero.vista;
 
+import cajero.modelo.Operacion;
 import cajero.modelo.Usuario;
+import javax.swing.JLabel;
 
 /**
  *
@@ -14,12 +16,12 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaConfirmacion.class.getName());
     private Usuario usuarioSesion;
-    private double montoRetiro;
+   
 
     /**
      * Creates new form PantallaConfirmacion
      */
-    public PantallaConfirmacion(String tipoOperacion, Usuario user, double monto) {
+    public PantallaConfirmacion(Operacion operacion, Usuario user, double saldoActual) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
@@ -31,17 +33,21 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         lblValorTitular.setVisible(false);
         
         // Si es transferencia, muestra los campos de cuenta destino y titular
-        if (tipoOperacion != null && tipoOperacion.equals("transferencia")) {
+        if (operacion.getTipo().equals("transferencia")) {
             lblCuentaDestino.setVisible(true);
             lblValorCuentaDestino.setVisible(true);
             lblTitular.setVisible(true);
             lblValorTitular.setVisible(true);
         }
-        this.usuarioSesion = user;
-        this.montoRetiro = monto;
         
-        // Mostrar los datos en labels para que el usuario los revise
-        lblValorMonto.setText("$ " + montoRetiro);
+        this.usuarioSesion = user;
+        
+        // Mostrar los datos reales en los labels
+        lblValorTipoOperacion.setText(operacion.getTipo());
+        lblMonto.setText("$" + operacion.getMonto());
+        lblValorFecha.setText(operacion.getFecha().toString());
+        lblValorSaldo.setText("$" + saldoActual);
+        
         
         
     }
