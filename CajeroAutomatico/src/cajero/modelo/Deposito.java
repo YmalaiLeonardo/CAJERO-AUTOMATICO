@@ -1,6 +1,8 @@
 
 package cajero.modelo;
 
+import cajero.bd.CuentaDAO;
+
 /**
  *
  * @author ymala
@@ -8,27 +10,45 @@ package cajero.modelo;
 // Deposito hereda de Operacion (herencia)
 // Esto significa que Deposito ES una Operacion
 public class Deposito extends Operacion {
+    private String mensajeError;
     
     // Constructor que recibe los datos del depósito
     public Deposito(int idCuenta, double monto) {
         // Llama al constructor de la clase padre (Operacion)
         // Le pasa el tipo "deposito" automáticamente
-        super(idCuenta, monto, "deposito");
+        super(idCuenta, monto, "Deposito");
     }
+    
+    public String getMensajeError() {
+        return mensajeError;
+    }
+    
     
     // Implementación del método abstracto ejecutar()
     // Aquí definimos cómo funciona específicamente un depósito
     @Override
     public boolean ejecutar(Cuenta cuenta) {
+        double monto = getMonto();
         
-        // Verificar que el monto sea mayor a 0
-        if (getMonto() <= 0) {
-            return false; // Monto inválido
+        // Validar que el monto sea mayor a 100
+        if (monto < 100) {
+            mensajeError = "El monto debe ser mayor o igual a 100 pesos.";
+            return false;
+        }       
+        
+        
+         // Si pasa las validaciones, realizar el depósito
+        cuenta.depositar(monto);
+        
+        
+        // Aquí también deberías actualizar la BD con CuentaDAO
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        boolean actualizado = cuentaDAO.procesarDeposito(cuenta.getId(), monto);
+        
+        if (!actualizado) {
+            mensajeError = "Error al procesar el depósito.";
         }
         
-        // Depositar el dinero en la cuenta
-        // El depósito siempre es exitoso si el monto es válido
-        cuenta.depositar(getMonto());
-        return true; // Depósito exitoso
+        return actualizado;
     }
 }

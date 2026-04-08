@@ -6,6 +6,8 @@ package cajero.vista;
 
 import cajero.modelo.Operacion;
 import cajero.modelo.Usuario;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JLabel;
 
 /**
@@ -33,7 +35,7 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         lblValorTitular.setVisible(false);
         
         // Si es transferencia, muestra los campos de cuenta destino y titular
-        if (operacion.getTipo().equals("transferencia")) {
+        if (operacion.getTipo().equals("Transferencia")) {
             lblCuentaDestino.setVisible(true);
             lblValorCuentaDestino.setVisible(true);
             lblTitular.setVisible(true);
@@ -44,9 +46,14 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         
         // Mostrar los datos reales en los labels
         lblValorTipoOperacion.setText(operacion.getTipo());
-        lblMonto.setText("$" + operacion.getMonto());
-        lblValorFecha.setText(operacion.getFecha().toString());
-        lblValorSaldo.setText("$" + saldoActual);
+        lblValorMonto.setText("$" + operacion.getMonto());
+        
+        Date fecha = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy (HH:mm:ss)");
+        String fechaFormateada = formato.format(fecha);
+        
+        lblValorFecha.setText(fechaFormateada);
+        lblValorSaldo.setText(String.format("$ %.2f", saldoActual));
         
         
         
@@ -187,26 +194,32 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblResumen)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblSaldoActual)
+                                .addGap(53, 53, 53)
+                                .addComponent(lblValorSaldo)))
+                        .addGap(50, 91, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTipoOperacion)
-                            .addComponent(lblResumen)
-                            .addComponent(lblMonto)
-                            .addComponent(lblCuentaDestino)
-                            .addComponent(lblTitular)
-                            .addComponent(lblFecha)
-                            .addComponent(lblSaldoActual))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblValorTipoOperacion)
-                            .addComponent(lblValorMonto)
-                            .addComponent(lblValorTitular)
-                            .addComponent(lblValorFecha)
-                            .addComponent(lblValorCuentaDestino)
-                            .addComponent(lblValorSaldo))
-                        .addGap(22, 22, 22))))
+                            .addComponent(jSeparator1)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTipoOperacion)
+                                    .addComponent(lblMonto)
+                                    .addComponent(lblCuentaDestino)
+                                    .addComponent(lblTitular)
+                                    .addComponent(lblFecha))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblValorTipoOperacion)
+                                    .addComponent(lblValorMonto)
+                                    .addComponent(lblValorTitular)
+                                    .addComponent(lblValorFecha)
+                                    .addComponent(lblValorCuentaDestino))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,26 +227,29 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblResumen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipoOperacion)
-                    .addComponent(lblValorTipoOperacion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMonto)
-                    .addComponent(lblValorMonto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCuentaDestino)
-                    .addComponent(lblValorCuentaDestino))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitular)
-                    .addComponent(lblValorTitular))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFecha)
-                    .addComponent(lblValorFecha))
-                .addGap(13, 13, 13)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblTipoOperacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMonto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCuentaDestino)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTitular)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFecha)
+                            .addComponent(lblValorFecha))
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblValorTipoOperacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValorMonto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValorCuentaDestino)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValorTitular)
+                        .addGap(41, 41, 41)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -266,11 +282,21 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
-        // TODO add your handling code here:
+        // Abrir la pantalla de cierre
+        PantallaCierre cierre = new PantallaCierre();
+        cierre.setVisible(true);
+
+        // Cerrar la pantalla actual de confirmación
+        this.dispose();
     }//GEN-LAST:event_btnNoActionPerformed
 
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
-        // TODO add your handling code here:
+        // Abrir la pantalla de cierre
+        PantallaComprobante comprobante = new PantallaComprobante(usuarioSesion);
+        comprobante.setVisible(true);
+
+        // Cerrar la pantalla actual de confirmación
+        this.dispose();
     }//GEN-LAST:event_btnSiActionPerformed
 
     private void btnSiFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnSiFocusGained

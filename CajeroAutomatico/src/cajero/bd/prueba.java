@@ -23,7 +23,9 @@ public class prueba {
         System.out.println("Copia esto en pin_salt: " + salt);
         System.out.println("Copia esto en pin_hash: " + hash);
     }
+    //ymalai 10203040-1234
     //estacalante 56231020-5698
     //manuel 10203050-7894
+    //victor 20304010-1236
     
 }

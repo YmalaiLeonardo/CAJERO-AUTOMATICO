@@ -7,9 +7,11 @@ package cajero.servicio;
  */
 
 
+import cajero.bd.CuentaDAO;
 import cajero.modelo.Usuario;
 import cajero.util.HashUtil;
 import cajero.bd.UsuarioDAO;
+import cajero.modelo.Cuenta;
 
 // Clase que maneja toda la lógica de autenticación
 public class AuthService {
@@ -73,7 +75,7 @@ public class AuthService {
     }
     
     public Usuario login(String numeroCuenta, String pinIngresado) {
-        // 1. Buscamos al usuario en la BD a través del DAO
+        // 1. Buscamos al usuario en la BD
         Usuario usuario = usuarioDAO.obtenerUsuarioPorCuenta(numeroCuenta);
 
         if (usuario == null) {
@@ -81,13 +83,18 @@ public class AuthService {
             return null;
         }
 
-        // 2. Usamos el método que ya tenías para validar el PIN
-        boolean valido  = validarPin(pinIngresado, usuario);
+        // 2. Validamos el PIN
+        boolean valido = validarPin(pinIngresado, usuario);
 
         if (valido) {
-            return usuarioDAO.obtenerUsuarioPorCuenta(numeroCuenta);
+            // 3. Cargar la cuenta asociada
+            CuentaDAO cuentaDAO = new CuentaDAO();
+            Cuenta cuenta = cuentaDAO.buscarCuentaPorNumero(usuario.getNumeroCuenta());
+            usuario.setCuenta(cuenta);
+
+            return usuario; // ahora el usuario tiene su cuenta
         } else {
-            return null; // PIN incorrecto o Bloqueado
+            return null; // PIN incorrecto o bloqueado
         }
     }
     

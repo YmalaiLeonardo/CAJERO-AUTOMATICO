@@ -1,6 +1,8 @@
 
 package cajero.modelo;
 
+import cajero.bd.CuentaDAO;
+
 /**
  *
  * @author ymala
@@ -12,13 +14,18 @@ public class Transferencia extends Operacion {
     // Atributo extra que solo tiene la transferencia
     // La cuenta destino a donde se enviará el dinero
     private Cuenta cuentaDestino;
+    private String mensajeError;
     
     // Constructor que recibe los datos de la transferencia
     public Transferencia(int idCuenta, double monto, Cuenta cuentaDestino) {
         // Llama al constructor de la clase padre (Operacion)
         // Le pasa el tipo "transferencia" automáticamente
-        super(idCuenta, monto, "transferencia");
+        super(idCuenta, monto, "Transferencia");
         this.cuentaDestino = cuentaDestino;
+    }
+    
+    public String getMensajeError() {
+        return mensajeError;
     }
     
     // Implementación del método abstracto ejecutar()
@@ -26,27 +33,31 @@ public class Transferencia extends Operacion {
     @Override
     public boolean ejecutar(Cuenta cuenta) {
         
-        // Verificar que el monto sea mayor a 0
-        if (getMonto() <= 0) {
-            return false; // Monto inválido
+        double monto = getMonto();
+
+        if (monto < 100) {
+            return false; // monto inválido
         }
-        
-        // Verificar que la cuenta destino no sea nula
-        if (cuentaDestino == null) {
-            return false; // No hay cuenta destino
+
+        if (monto > cuentaOrigen.getSaldo()) {
+            return false; // saldo insuficiente
         }
-        
-        // Intentar retirar de la cuenta origen
-        // Si no hay saldo suficiente retorna false
-        boolean retiroExitoso = cuenta.retirar(getMonto());
-        
+
+        // Retirar de origen
+        boolean retiroExitoso = cuentaOrigen.retirar(monto);
+
         if (retiroExitoso) {
-            // Si el retiro fue exitoso, depositar en la cuenta destino
-            cuentaDestino.depositar(getMonto());
-            return true; // Transferencia exitosa
+            // Depositar en destino
+            cuentaDestino.depositar(monto);
+
+            CuentaDAO cuentaDAO = new CuentaDAO();
+            boolean actualizadoOrigen = cuentaDAO.procesarRetiro(cuentaOrigen.getId(), monto);
+            boolean actualizadoDestino = cuentaDAO.procesarDeposito(cuentaDestino.getId(), monto);
+
+            return actualizadoOrigen && actualizadoDestino;
         }
-        
-        return false; // Saldo insuficiente
+
+        return false;
     }
     
     // Getter de la cuenta destino

@@ -6,6 +6,7 @@ package cajero.vista;
 
 import cajero.bd.CuentaDAO;
 import cajero.modelo.Cuenta;
+import cajero.modelo.Deposito;
 import cajero.modelo.Retiro;
 import cajero.modelo.Usuario;
 import java.awt.Color;
@@ -28,7 +29,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
         initComponents();
         this.setSize(709, 451);
         this.pack();
-        lblError.setVisible(false);
+        lblError.setVisible(true);
         this.usuarioSesion = user;
 
         
@@ -163,20 +164,22 @@ public class PantallaRetiro extends javax.swing.JFrame {
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         double monto = Double.parseDouble(txtMonto.getText());
-
-        // Usar la cuenta del usuario en sesión
+        
         Retiro retiro = new Retiro(usuarioSesion.getCuenta().getId(), monto);
-        boolean exito = retiro.ejecutar((Cuenta) usuarioSesion.getCuenta());
+        boolean exito = retiro.ejecutar(usuarioSesion.getCuenta());
 
-        if (exito) {
-            double saldoActual = usuarioSesion.getCuenta().getSaldo();
-            new PantallaConfirmacion(retiro, usuarioSesion, saldoActual).setVisible(true);
-            this.dispose(); // cerrar la pantalla actual si quieres
-        } else {
-            lblError.setText("<html>Saldo insuficiente o monto inválido</html>");
-        }
-        // Cerrar la pantalla de retiro
+        if (!exito) {
+            lblError.setText(retiro.getMensajeError());
+            return;
+        }        
+        
+        // Si fue exitoso, limpiar error y abrir confirmación
+        lblError.setText("");
+        new PantallaConfirmacion(retiro, usuarioSesion, usuarioSesion.getCuenta().getSaldo()).setVisible(true);
+        
+        // Cerrar la pantalla de deposito
         this.dispose();
+        
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
   

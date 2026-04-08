@@ -29,7 +29,7 @@ public class PantallaDeposito extends javax.swing.JFrame {
         initComponents();
         this.setSize(709, 451);
         this.pack();
-        lblError.setVisible(false);
+        lblError.setVisible(true);
         this.usuarioSesion = user;
         
         txtMonto.setForeground(Color.GRAY);
@@ -49,6 +49,15 @@ public class PantallaDeposito extends javax.swing.JFrame {
                 }
             }
         });
+        mostrarSaldo(); // Llamamos a la función para mostrar el dinero
+    }
+    
+    private void mostrarSaldo() {
+        CuentaDAO dao = new CuentaDAO();
+        double saldo = dao.obtenerSaldo(usuarioSesion.getId());
+
+        // Formateamos el texto para que se vea profesional
+        lblSaldo.setText("Saldo disponible: $ " + String.format("%.2f", saldo));
     }
 
     /**
@@ -93,10 +102,12 @@ public class PantallaDeposito extends javax.swing.JFrame {
         txtMonto.setBackground(new java.awt.Color(204, 204, 204));
         txtMonto.setForeground(new java.awt.Color(153, 153, 153));
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
+        txtMonto.addActionListener(this::txtMontoActionPerformed);
         jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, 40));
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblError.setForeground(new java.awt.Color(149, 18, 44));
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 260, 240, 50));
 
         btnConfirmar.setBackground(new java.awt.Color(142, 182, 155));
@@ -152,18 +163,23 @@ public class PantallaDeposito extends javax.swing.JFrame {
         Deposito deposito = new Deposito(usuarioSesion.getCuenta().getId(), monto);
         boolean exito = deposito.ejecutar(usuarioSesion.getCuenta());
 
-        if (exito) {
-            double saldoActual = usuarioSesion.getCuenta().getSaldo();
-            new PantallaConfirmacion(deposito, usuarioSesion, saldoActual).setVisible(true);
-            this.dispose();
-        } else {
-            lblError.setText("Monto inválido");
-        }
-        // Cerrar la pantalla de retiro
+        if (!exito) {
+            lblError.setText(deposito.getMensajeError());
+            return;
+        }        
+        
+        // Si fue exitoso, limpiar error y abrir confirmación
+        lblError.setText("");
+        new PantallaConfirmacion(deposito, usuarioSesion, usuarioSesion.getCuenta().getSaldo()).setVisible(true);
+        
+        // Cerrar la pantalla de deposito
         this.dispose();
         
-        
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void txtMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMontoActionPerformed
 
     
 

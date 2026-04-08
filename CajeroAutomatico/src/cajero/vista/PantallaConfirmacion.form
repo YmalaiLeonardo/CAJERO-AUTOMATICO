@@ -168,29 +168,39 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jSeparator1" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblResumen" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="lblSaldoActual" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                          <Component id="lblValorSaldo" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="50" pref="91" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblTipoOperacion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblResumen" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblMonto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblCuentaDestino" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblTitular" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblSaldoActual" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="lblTipoOperacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblMonto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblCuentaDestino" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblTitular" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblFecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="lblValorTipoOperacion" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblValorMonto" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblValorTitular" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblValorFecha" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblValorCuentaDestino" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblValorTipoOperacion" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblValorMonto" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblValorTitular" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblValorFecha" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblValorCuentaDestino" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblValorSaldo" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -202,31 +212,33 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblResumen" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblTipoOperacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblValorTipoOperacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lblTipoOperacion" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblMonto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblCuentaDestino" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblTitular" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblValorFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="lblValorTipoOperacion" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblValorMonto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblValorCuentaDestino" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblValorTitular" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblMonto" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblValorMonto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblCuentaDestino" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblValorCuentaDestino" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblTitular" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblValorTitular" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblValorFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Component id="jSeparator1" min="-2" pref="4" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">

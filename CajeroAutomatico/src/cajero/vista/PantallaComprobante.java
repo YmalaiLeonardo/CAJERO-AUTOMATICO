@@ -4,23 +4,33 @@
  */
 package cajero.vista;
 
+import cajero.modelo.Usuario;
+
 /**
  *
  * @author ymala
  */
 public class PantallaComprobante extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaComprobante.class.getName());
+    //private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaComprobante.class.getName());
 
     /**
      * Creates new form PantallaComprobante
      */
-    public PantallaComprobante() {
+    private Usuario usuarioSesion;
+    public PantallaComprobante(Usuario usuarioSesion) {
         initComponents();
         this.setSize(709, 451);
         this.pack();
+        this.usuarioSesion = usuarioSesion;
         
-        lblCorreo.setText("juan.perez@email.com");
+        
+        if (usuarioSesion != null && usuarioSesion.getCorreo() != null) {
+            lblCorreo.setText(usuarioSesion.getCorreo());
+        } else {
+            lblCorreo.setText("No se encontró correo vinculado al usuario.");
+        }
+        
     }
 
     /**
@@ -35,7 +45,6 @@ public class PantallaComprobante extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        btnMenu = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
         lblIcono = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -60,26 +69,13 @@ public class PantallaComprobante extends javax.swing.JFrame {
         lblTitulo.setText("¡Comprobante enviado a tu correo!");
         jPanel2.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 280, -1));
 
-        btnMenu.setBackground(new java.awt.Color(142, 182, 155));
-        btnMenu.setFont(new java.awt.Font("Serif", 1, 12)); // NOI18N
-        btnMenu.setForeground(new java.awt.Color(11, 43, 38));
-        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/flecha.png"))); // NOI18N
-        btnMenu.setText(" Volver al menú");
-        btnMenu.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                btnMenuFocusGained(evt);
-            }
-        });
-        btnMenu.addActionListener(this::btnMenuActionPerformed);
-        jPanel2.add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 140, 30));
-
         btnFinalizar.setBackground(new java.awt.Color(179, 179, 179));
         btnFinalizar.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         btnFinalizar.setForeground(new java.awt.Color(43, 43, 43));
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/cerrar-sesion (1).png"))); // NOI18N
         btnFinalizar.setText(" Finalizar sesión");
         btnFinalizar.addActionListener(this::btnFinalizarActionPerformed);
-        jPanel2.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 140, -1));
+        jPanel2.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 140, -1));
 
         lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/email (1).png"))); // NOI18N
         jPanel2.add(lblIcono, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
@@ -98,7 +94,7 @@ public class PantallaComprobante extends javax.swing.JFrame {
         lblCorreo.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         lblCorreo.setForeground(new java.awt.Color(11, 43, 38));
         lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCorreo.setText("[mail]");
+        lblCorreo.setText("mail");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -123,9 +119,9 @@ public class PantallaComprobante extends javax.swing.JFrame {
                 .addComponent(lblMensaje)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMensaje1)
-                .addGap(27, 27, 27)
-                .addComponent(lblCorreo)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 260, 140));
@@ -137,46 +133,19 @@ public class PantallaComprobante extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMenuFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnMenuFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMenuFocusGained
-
-    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMenuActionPerformed
-
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        // TODO add your handling code here:
+        // Abrir la pantalla de cierre
+        PantallaCierre cierre = new PantallaCierre();
+        cierre.setVisible(true);
+
+        // Cerrar la pantalla actual de comprobante
+        this.dispose();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PantallaComprobante().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizar;
-    private javax.swing.JButton btnMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

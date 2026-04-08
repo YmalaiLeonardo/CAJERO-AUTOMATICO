@@ -68,6 +68,16 @@ public class PantallaTransferencia extends javax.swing.JFrame {
                 }
             }
         });
+        
+        mostrarSaldo(); // Llamamos a la función para mostrar el dinero
+    }
+    
+    private void mostrarSaldo() {
+        CuentaDAO dao = new CuentaDAO();
+        double saldo = dao.obtenerSaldo(usuarioSesion.getId());
+
+        // Formateamos el texto para que se vea profesional
+        lblSaldo.setText("Saldo disponible: $ " + String.format("%.2f", saldo));
     }
 
     /**
@@ -116,11 +126,11 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         txtCuentaDestino.setBackground(new java.awt.Color(204, 204, 204));
         txtCuentaDestino.setForeground(new java.awt.Color(153, 153, 153));
         txtCuentaDestino.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
-        jPanel2.add(txtCuentaDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 250, 40));
+        jPanel2.add(txtCuentaDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 250, 30));
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblError.setForeground(new java.awt.Color(149, 18, 44));
-        jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 250, 20));
+        jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 250, 40));
 
         btnConfirmar.setBackground(new java.awt.Color(142, 182, 155));
         btnConfirmar.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
@@ -147,12 +157,12 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         lblMonto.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         lblMonto.setForeground(new java.awt.Color(0, 0, 0));
         lblMonto.setText("Monto a transferir");
-        jPanel2.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel2.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
 
         txtMonto.setBackground(new java.awt.Color(204, 204, 204));
         txtMonto.setForeground(new java.awt.Color(153, 153, 153));
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
-        jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 250, 40));
+        jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 250, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 300, 430));
 
@@ -181,59 +191,51 @@ public class PantallaTransferencia extends javax.swing.JFrame {
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         try {
-            double monto = Double.parseDouble(txtMonto.getText());
-            String numeroDestino = txtCuentaDestino.getText();
+        double monto = Double.parseDouble(txtMonto.getText());
+        String numeroDestino = txtCuentaDestino.getText();
 
-            System.out.println("Monto ingresado: " + monto);
-            System.out.println("Número destino: " + numeroDestino);
-
-            if (monto <= 0) {
-                lblError.setText("Ingrese un monto válido.");
-                return;
-            }
-
-            CuentaDAO cuentaDAO = new CuentaDAO();
-            Cuenta cuentaDestino = cuentaDAO.buscarCuentaPorNumero(txtCuentaDestino.getText());
-            if (cuentaDestino == null) {
-                lblError.setText("Cuenta destino no encontrada.");
-                return;
-            }
-            
-            System.out.println("Cuenta destino: id=" + cuentaDestino.getId() +
-                               ", usuario=" + cuentaDestino.getIdUsuario() +
-                               ", saldo=" + cuentaDestino.getSaldo() +
-                               ", numeroCuenta=" + cuentaDestino.getNumeroCuenta());
-            
-            System.out.println("Cuenta destino encontrada: " + cuentaDestino);
-
-            
-
-            if (cuentaDestino.getId() == usuarioSesion.getCuenta().getId()) {
-                lblError.setText("No puede transferir a su propia cuenta.");
-                return;
-            }
-
-            Transferencia transferencia = new Transferencia(
-                usuarioSesion.getCuenta().getId(),
-                monto,
-                cuentaDestino
-            );
-
-            boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
-            System.out.println("Resultado de ejecutar transferencia: " + exito);
-
-            if (exito) {
-                double saldoActual = usuarioSesion.getCuenta().getSaldo();
-                new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
-                this.dispose(); // cerrar solo si fue exitosa
-            } else {
-                lblError.setText("Saldo insuficiente o monto inválido.");
-            }
-
-        } catch (NumberFormatException e) {
-            lblError.setText("Ingrese valores numéricos válidos.");
-            e.printStackTrace();
+        if (monto < 100) {
+            lblError.setText("El monto debe ser mayor o igual a 100 pesos.");
+            return;
         }
+
+        if (monto > usuarioSesion.getCuenta().getSaldo()) {
+            lblError.setText("El monto no puede ser mayor al saldo actual.");
+            return;
+        }
+
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        Cuenta cuentaDestino = cuentaDAO.buscarCuentaPorNumero(numeroDestino);
+        if (cuentaDestino == null) {
+            lblError.setText("Cuenta destino no encontrada.");
+            return;
+        }
+
+        if (cuentaDestino.getId() == usuarioSesion.getCuenta().getId()) {
+            lblError.setText("No puede transferir a su propia cuenta.");
+            return;
+        }
+
+        Transferencia transferencia = new Transferencia(
+            usuarioSesion.getCuenta().getId(),
+            monto,
+            cuentaDestino
+        );
+
+        boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
+
+        if (exito) {
+            double saldoActual = usuarioSesion.getCuenta().getSaldo();
+            new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
+            this.dispose();
+        } else {
+            lblError.setText("Error al procesar la transferencia.");
+        }
+
+    } catch (NumberFormatException e) {
+        lblError.setText("Ingrese valores numéricos válidos.");
+    }
+
         
 
     }//GEN-LAST:event_btnConfirmarActionPerformed

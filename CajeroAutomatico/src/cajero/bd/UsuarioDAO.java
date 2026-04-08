@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cajero.bd;
 
 /**
@@ -29,6 +25,7 @@ public class UsuarioDAO {
                 user.setPinHash(rs.getString("pin_hash"));
                 user.setPinSalt(rs.getString("pin_salt"));
                 user.setBloqueado(rs.getBoolean("bloqueado"));
+                user.setCorreo(rs.getString("correo"));
                 return user;
             }
         } catch (SQLException e) {

@@ -4,6 +4,8 @@
  */
 package cajero.vista;
 
+import cajero.modelo.Usuario;
+
 /**
  *
  * @author ymala
