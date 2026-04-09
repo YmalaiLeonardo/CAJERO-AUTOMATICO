@@ -4,11 +4,16 @@
  */
 package cajero.vista;
 
+import cajero.bd.UsuarioDAO;
+import cajero.modelo.Cuenta;
 import cajero.modelo.Operacion;
+import cajero.modelo.Transferencia;
 import cajero.modelo.Usuario;
+import cajero.servicio.CorreoService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +23,7 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaConfirmacion.class.getName());
     private Usuario usuarioSesion;
+    private Operacion operacion;
    
 
     /**
@@ -27,22 +33,32 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         initComponents();
         this.setSize(709, 451);
         this.pack();
+        this.usuarioSesion = user;
+        this.operacion = operacion;
         
-        // Ocultar campos de transferencia por defecto
-        lblCuentaDestino.setVisible(false);
-        lblValorCuentaDestino.setVisible(false);
-        lblTitular.setVisible(false);
-        lblValorTitular.setVisible(false);
-        
-        // Si es transferencia, muestra los campos de cuenta destino y titular
-        if (operacion.getTipo().equals("Transferencia")) {
+        // Si la operación es transferencia, mostrar cuenta destino y titular
+        if (operacion instanceof Transferencia) {
+            Transferencia transferencia = (Transferencia) operacion;
+            Cuenta cuentaDestino = transferencia.getCuentaDestino();
+
             lblCuentaDestino.setVisible(true);
             lblValorCuentaDestino.setVisible(true);
             lblTitular.setVisible(true);
             lblValorTitular.setVisible(true);
+
+            lblValorCuentaDestino.setText(cuentaDestino.getNumeroCuenta());
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            Usuario titular = usuarioDAO.obtenerUsuarioPorId(cuentaDestino.getIdUsuario());
+            lblValorTitular.setText(titular.getNombre());
+        } else {
+            // Ocultar campos si no es transferencia
+            lblCuentaDestino.setVisible(false);
+            lblValorCuentaDestino.setVisible(false);
+            lblTitular.setVisible(false);
+            lblValorTitular.setVisible(false);
         }
         
-        this.usuarioSesion = user;
         
         // Mostrar los datos reales en los labels
         lblValorTipoOperacion.setText(operacion.getTipo());
@@ -291,10 +307,19 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNoActionPerformed
 
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
+        
+        // Crear el servicio de correo
+        CorreoService correoService = new CorreoService();
+    
+        boolean enviado = correoService.enviarComprobante(usuarioSesion, operacion);
+        System.out.println(enviado 
+            ? "Comprobante enviado a su correo." 
+            : "Error al enviar el comprobante.");
+
         // Abrir la pantalla de cierre
         PantallaComprobante comprobante = new PantallaComprobante(usuarioSesion);
         comprobante.setVisible(true);
-
+        
         // Cerrar la pantalla actual de confirmación
         this.dispose();
     }//GEN-LAST:event_btnSiActionPerformed

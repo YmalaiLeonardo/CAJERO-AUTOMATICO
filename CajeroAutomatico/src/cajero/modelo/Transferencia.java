@@ -2,6 +2,7 @@
 package cajero.modelo;
 
 import cajero.bd.CuentaDAO;
+import cajero.bd.OperacionDAO;
 
 /**
  *
@@ -22,7 +23,11 @@ public class Transferencia extends Operacion {
         // Le pasa el tipo "transferencia" automáticamente
         super(idCuenta, monto, "Transferencia");
         this.cuentaDestino = cuentaDestino;
-    }
+    }     
+    
+   
+    
+    
     
     public String getMensajeError() {
         return mensajeError;
@@ -31,38 +36,55 @@ public class Transferencia extends Operacion {
     // Implementación del método abstracto ejecutar()
     // Aquí definimos cómo funciona específicamente una transferencia
     @Override
-    public boolean ejecutar(Cuenta cuenta) {
+    public boolean ejecutar(Cuenta cuentaOrigen) {
         
         double monto = getMonto();
 
         if (monto < 100) {
-            return false; // monto inválido
+            mensajeError = "El monto debe ser mayor o igual a 100 pesos.";
+            return false;
         }
 
         if (monto > cuentaOrigen.getSaldo()) {
-            return false; // saldo insuficiente
+            mensajeError = "El monto no puede ser mayor al saldo disponible.";
+            return false;
         }
 
-        // Retirar de origen
         boolean retiroExitoso = cuentaOrigen.retirar(monto);
 
         if (retiroExitoso) {
-            // Depositar en destino
             cuentaDestino.depositar(monto);
 
             CuentaDAO cuentaDAO = new CuentaDAO();
-            boolean actualizadoOrigen = cuentaDAO.procesarRetiro(cuentaOrigen.getId(), monto);
-            boolean actualizadoDestino = cuentaDAO.procesarDeposito(cuentaDestino.getId(), monto);
+            OperacionDAO operacionDAO = new OperacionDAO();
+            boolean actualizadoOrigen = cuentaDAO.actualizarSaldo(cuentaOrigen.getId(), cuentaOrigen.getSaldo());
+            boolean actualizadoDestino = cuentaDAO.actualizarSaldo(cuentaDestino.getId(), cuentaDestino.getSaldo());
 
-            return actualizadoOrigen && actualizadoDestino;
+            // Registrar la operación en la tabla operaciones
+            boolean registrada = operacionDAO.registrarTransferencia(
+                cuentaOrigen.getId(),
+                monto,
+                cuentaDestino.getId()
+            );
+
+            if (!actualizadoOrigen || !actualizadoDestino || !registrada) {
+                mensajeError = "Error al actualizar la base de datos.";                
+                return false;
+            }
+
+            return true;
         }
 
+        mensajeError = "Saldo insuficiente.";
         return false;
     }
     
-    // Getter de la cuenta destino
     public Cuenta getCuentaDestino() { return cuentaDestino; }
     public void setCuentaDestino(Cuenta cuentaDestino) { 
         this.cuentaDestino = cuentaDestino; 
     }
+    
+   
 }
+    
+ 

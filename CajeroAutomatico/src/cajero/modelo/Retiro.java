@@ -2,6 +2,7 @@
 package cajero.modelo;
 
 import cajero.bd.CuentaDAO;
+import cajero.bd.OperacionDAO;
 
 /**
  *
@@ -42,18 +43,24 @@ public class Retiro extends Operacion {
             return false;
         }
         
-        // Si pasa las validaciones, realizar el depósito
-        cuenta.retirar(monto);
-        
-        
-        // Aquí también deberías actualizar la BD con CuentaDAO
-        CuentaDAO cuentaDAO = new CuentaDAO();
-        boolean actualizado = cuentaDAO.procesarRetiro(cuenta.getId(), monto);
-        
-        if (!actualizado) {
-            mensajeError = "Error al procesar el depósito.";
+        boolean retiroExitoso = cuenta.retirar(getMonto());
+
+        if (retiroExitoso) {
+            CuentaDAO cuentaDAO = new CuentaDAO();
+            OperacionDAO operacionDAO = new OperacionDAO();
+
+            boolean actualizado = cuentaDAO.actualizarSaldo(cuenta.getId(), cuenta.getSaldo());
+            boolean registrada = operacionDAO.registrarRetiro(cuenta.getId(), getMonto());
+
+            if (!actualizado || !registrada) {
+                mensajeError = "Error al actualizar la base de datos.";
+                return false;
+            }
+
+            return true;
         }
-        
-        return actualizado;
+
+        mensajeError = "No se pudo realizar el retiro.";
+        return false;
     }
 }

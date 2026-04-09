@@ -89,5 +89,32 @@ public class UsuarioDAO {
         }
         return 0;
     }
+    
+    public Usuario obtenerUsuarioPorId(int idUsuario) {
+        String sql = "SELECT * FROM usuarios WHERE id = ?";
+
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Usuario user = new Usuario();
+                user.setId(rs.getInt("id"));
+                user.setNombre(rs.getString("nombre"));
+                user.setNumeroCuenta(rs.getString("numero_cuenta"));
+                user.setPinHash(rs.getString("pin_hash"));
+                user.setPinSalt(rs.getString("pin_salt"));
+                user.setBloqueado(rs.getBoolean("bloqueado"));
+                user.setCorreo(rs.getString("correo"));
+                return user;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error en DAO: " + e.getMessage());
+        }
+        return null; // Si el usuario no existe
+    }
+
 
 }

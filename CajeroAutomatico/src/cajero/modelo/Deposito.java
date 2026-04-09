@@ -2,6 +2,7 @@
 package cajero.modelo;
 
 import cajero.bd.CuentaDAO;
+import cajero.bd.OperacionDAO;
 
 /**
  *
@@ -43,12 +44,16 @@ public class Deposito extends Operacion {
         
         // Aquí también deberías actualizar la BD con CuentaDAO
         CuentaDAO cuentaDAO = new CuentaDAO();
-        boolean actualizado = cuentaDAO.procesarDeposito(cuenta.getId(), monto);
+        OperacionDAO operacionDAO = new OperacionDAO();
         
-        if (!actualizado) {
-            mensajeError = "Error al procesar el depósito.";
+        boolean actualizado = cuentaDAO.procesarDeposito(cuenta.getId(), monto);
+        boolean registrada = operacionDAO.registrarDeposito(cuenta.getId(), getMonto());
+        
+        if (!actualizado || !registrada) {
+            mensajeError = "Error al actualizar la base de datos.";
+            return false;
         }
         
-        return actualizado;
+        return true;
     }
 }

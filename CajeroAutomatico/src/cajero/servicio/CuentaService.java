@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package cajero.servicio;
 
 /**
@@ -63,19 +60,4 @@ public class CuentaService {
         return cuenta.getSaldo();
     }
     
-    /*// Verifica si una cuenta existe en la lista de cuentas
-    // Por ahora con datos simulados, después vendrá de la BD
-    public Cuenta buscarCuentaPorNumero(String numeroCuenta) {
-        
-        // Datos simulados mientras no hay BD
-        // Esto se reemplazará por una consulta a MySQL
-        if (numeroCuenta.equals("1001")) {
-            return new Cuenta(1, 1, 5000.00);
-        } else if (numeroCuenta.equals("1002")) {
-            return new Cuenta(2, 2, 3200.00);
-        }
-        
-        // Si no encuentra la cuenta retorna null
-        return null;
-    }*/
 }

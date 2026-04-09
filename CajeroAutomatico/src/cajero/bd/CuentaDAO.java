@@ -90,4 +90,20 @@ public class CuentaDAO {
         return null;
     }
     
+    public boolean actualizarSaldo(int idCuenta, double nuevoSaldo) {
+        String sql = "UPDATE cuentas SET saldo = ? WHERE id = ?";
+        try (Connection con = ConexionBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setDouble(1, nuevoSaldo);
+            ps.setInt(2, idCuenta);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar saldo: " + e.getMessage());
+            return false;
+        }
+    }
+   
+    
+
+    
 }

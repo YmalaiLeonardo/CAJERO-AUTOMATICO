@@ -27,6 +27,7 @@ public abstract class Operacion {
         this.fecha = new Date(); // Fecha actual automáticamente
     }
     
+    
     // Método abstracto que cada operación implementará a su manera
     // Esto es polimorfismo: cada clase hija tiene su propio ejecutar()
     public abstract boolean ejecutar(Cuenta cuenta);

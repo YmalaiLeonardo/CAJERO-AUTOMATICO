@@ -30,7 +30,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         initComponents();
         this.setSize(709, 451);
         this.pack();
-        lblError.setVisible(false);
+        lblError.setVisible(true);
         this.usuarioSesion = user;
         
         txtCuentaDestino.setForeground(Color.GRAY);
@@ -130,6 +130,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblError.setForeground(new java.awt.Color(149, 18, 44));
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel2.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 250, 40));
 
         btnConfirmar.setBackground(new java.awt.Color(142, 182, 155));
@@ -190,22 +191,41 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        String cuenta = txtCuentaDestino.getText();
+        
+        // "\\d{8}" significa: solo números y que sean exactamente 8
+        if (!cuenta.matches("\\d{8}")) {
+            lblError.setText("<html>El número de cuenta debe tener exactamente 8 dígitos numéricos.</html>");
+            lblError.setVisible(true);
+            return;
+        }
+        
         try {
         double monto = Double.parseDouble(txtMonto.getText());
         String numeroDestino = txtCuentaDestino.getText();
+        
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        Cuenta cuentaDestino = cuentaDAO.buscarCuentaPorNumero(numeroDestino);
+        
+        Transferencia transferencia = new Transferencia(
+            usuarioSesion.getCuenta().getId(),
+            monto,
+            cuentaDestino
+        );
 
+        boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
+        
         if (monto < 100) {
-            lblError.setText("El monto debe ser mayor o igual a 100 pesos.");
+            lblError.setText(transferencia.getMensajeError());
             return;
         }
 
         if (monto > usuarioSesion.getCuenta().getSaldo()) {
-            lblError.setText("El monto no puede ser mayor al saldo actual.");
+            lblError.setText(transferencia.getMensajeError());
             return;
         }
 
-        CuentaDAO cuentaDAO = new CuentaDAO();
-        Cuenta cuentaDestino = cuentaDAO.buscarCuentaPorNumero(numeroDestino);
+        
         if (cuentaDestino == null) {
             lblError.setText("Cuenta destino no encontrada.");
             return;
@@ -216,20 +236,14 @@ public class PantallaTransferencia extends javax.swing.JFrame {
             return;
         }
 
-        Transferencia transferencia = new Transferencia(
-            usuarioSesion.getCuenta().getId(),
-            monto,
-            cuentaDestino
-        );
-
-        boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
-
+        
         if (exito) {
             double saldoActual = usuarioSesion.getCuenta().getSaldo();
             new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
             this.dispose();
         } else {
-            lblError.setText("Error al procesar la transferencia.");
+            lblError.setText(transferencia.getMensajeError());
+            return;
         }
 
     } catch (NumberFormatException e) {
