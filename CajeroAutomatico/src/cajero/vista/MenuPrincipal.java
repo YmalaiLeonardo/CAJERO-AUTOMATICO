@@ -23,6 +23,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.setSize(709, 451);
         this.pack();
         this.usuarioSesion = user;
+        setLocationRelativeTo(null);   
         
         actualizarPantalla();
     }

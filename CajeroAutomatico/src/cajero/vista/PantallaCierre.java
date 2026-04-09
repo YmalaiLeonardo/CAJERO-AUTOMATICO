@@ -21,6 +21,7 @@ public class PantallaCierre extends javax.swing.JFrame {
         initComponents();
         this.setSize(709, 451);
         this.pack();
+        setLocationRelativeTo(null);   
     }
 
     /**

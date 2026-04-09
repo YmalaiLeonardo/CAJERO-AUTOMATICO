@@ -5,12 +5,9 @@
 package cajero.vista;
 
 import cajero.bd.CuentaDAO;
-import cajero.modelo.Cuenta;
 import cajero.modelo.Deposito;
-import cajero.modelo.Retiro;
 import cajero.modelo.Usuario;
 import java.awt.Color;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,6 +28,7 @@ public class PantallaDeposito extends javax.swing.JFrame {
         this.pack();
         lblError.setVisible(true);
         this.usuarioSesion = user;
+        setLocationRelativeTo(null);   
         
         txtMonto.setForeground(Color.GRAY);
         txtMonto.setText(" $0.00");
@@ -103,6 +101,11 @@ public class PantallaDeposito extends javax.swing.JFrame {
         txtMonto.setForeground(new java.awt.Color(153, 153, 153));
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         txtMonto.addActionListener(this::txtMontoActionPerformed);
+        txtMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, 40));
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -180,6 +183,16 @@ public class PantallaDeposito extends javax.swing.JFrame {
     private void txtMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMontoActionPerformed
+
+    private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        // Solo permitir dígitos, ignorar letras y otros símbolos
+        if (!Character.isDigit(c) || txtMonto.getText().length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMontoKeyTyped
 
     
 

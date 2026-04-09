@@ -5,12 +5,10 @@
 package cajero.vista;
 
 import cajero.bd.CuentaDAO;
-import cajero.modelo.Cuenta;
-import cajero.modelo.Deposito;
 import cajero.modelo.Retiro;
 import cajero.modelo.Usuario;
 import java.awt.Color;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -31,6 +29,7 @@ public class PantallaRetiro extends javax.swing.JFrame {
         this.pack();
         lblError.setVisible(true);
         this.usuarioSesion = user;
+        setLocationRelativeTo(null);   
 
         
         txtMonto.setForeground(Color.GRAY);
@@ -108,6 +107,11 @@ public class PantallaRetiro extends javax.swing.JFrame {
         txtMonto.setBackground(new java.awt.Color(204, 204, 204));
         txtMonto.setForeground(new java.awt.Color(153, 153, 153));
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
+        txtMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, 40));
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -181,6 +185,16 @@ public class PantallaRetiro extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        // Si no es dígito o ya hay 4 caracteres, se ignora
+        if (!Character.isDigit(c) || txtMonto.getText().length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMontoKeyTyped
 
   
 

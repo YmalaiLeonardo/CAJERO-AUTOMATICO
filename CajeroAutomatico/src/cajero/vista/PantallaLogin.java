@@ -22,6 +22,8 @@ public class PantallaLogin extends javax.swing.JFrame {
         lblError.setVisible(false);
         this.setSize(709, 451);
         this.pack();
+        setLocationRelativeTo(null);   
+        
         
         txtCuenta.setForeground(Color.GRAY);
         txtCuenta.setText(" Ingresa tu número de cuenta");
@@ -79,11 +81,12 @@ public class PantallaLogin extends javax.swing.JFrame {
         lblSubtitulo = new javax.swing.JLabel();
         lblCuenta = new javax.swing.JLabel();
         txtCuenta = new javax.swing.JTextField();
-        lblPin = new javax.swing.JLabel();
+        lblAcercaDe = new javax.swing.JLabel();
         txtPin = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
         icono = new javax.swing.JLabel();
+        lblPin1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cajero Automático");
@@ -121,12 +124,29 @@ public class PantallaLogin extends javax.swing.JFrame {
         txtCuenta.setAlignmentX(0.0F);
         txtCuenta.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
         txtCuenta.addActionListener(this::txtCuentaActionPerformed);
+        txtCuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCuentaKeyTyped(evt);
+            }
+        });
         panelCentro.add(txtCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 210, 30));
 
-        lblPin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblPin.setForeground(new java.awt.Color(0, 0, 0));
-        lblPin.setText("PIN");
-        panelCentro.add(lblPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        lblAcercaDe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAcercaDe.setForeground(new java.awt.Color(0, 0, 0));
+        lblAcercaDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/acerca-de.png"))); // NOI18N
+        lblAcercaDe.setText("Acerca de");
+        lblAcercaDe.setToolTipText("\"Haz clic aquí\"");
+        lblAcercaDe.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblAcercaDeFocusGained(evt);
+            }
+        });
+        lblAcercaDe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAcercaDeMouseClicked(evt);
+            }
+        });
+        panelCentro.add(lblAcercaDe, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
 
         txtPin.setBackground(new java.awt.Color(204, 204, 204));
         txtPin.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
@@ -156,6 +176,11 @@ public class PantallaLogin extends javax.swing.JFrame {
         icono.setBackground(new java.awt.Color(11, 43, 38));
         icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cajeroautomatico/imagenes/office-building.png"))); // NOI18N
         panelCentro.add(icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 70, -1));
+
+        lblPin1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPin1.setForeground(new java.awt.Color(0, 0, 0));
+        lblPin1.setText("PIN");
+        panelCentro.add(lblPin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
         jPanel1.add(panelCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 250, 410));
 
@@ -225,6 +250,23 @@ public class PantallaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtPinKeyTyped
 
+    private void txtCuentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCuentaKeyTyped
+        char c = evt.getKeyChar();
+
+        // Solo permitir dígitos, ignorar letras y otros símbolos
+        if (!Character.isDigit(c) || txtCuenta.getText().length() >= 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCuentaKeyTyped
+
+    private void lblAcercaDeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAcercaDeMouseClicked
+        JOptionPane.showMessageDialog(null, "Hola");
+    }//GEN-LAST:event_lblAcercaDeMouseClicked
+
+    private void lblAcercaDeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblAcercaDeFocusGained
+        
+    }//GEN-LAST:event_lblAcercaDeFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -254,10 +296,11 @@ public class PantallaLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel icono;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblAcercaDe;
     private javax.swing.JLabel lblBanco;
     private javax.swing.JLabel lblCuenta;
     private javax.swing.JLabel lblError;
-    private javax.swing.JLabel lblPin;
+    private javax.swing.JLabel lblPin1;
     private javax.swing.JLabel lblSubtitulo;
     private javax.swing.JPanel panelCentro;
     private javax.swing.JTextField txtCuenta;

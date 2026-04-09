@@ -16,7 +16,7 @@ public class prueba {
             System.out.println("LA CONEXIÓN FALLÓ.");
         }
         
-        String pin = "5698"; 
+        String pin = "2065"; 
         String salt = HashUtil.generarSalt();
         String hash = HashUtil.hashPin(pin, salt);
 

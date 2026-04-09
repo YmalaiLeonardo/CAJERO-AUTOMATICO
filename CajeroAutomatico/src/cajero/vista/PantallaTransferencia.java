@@ -6,11 +6,10 @@ package cajero.vista;
 
 import cajero.bd.CuentaDAO;
 import cajero.modelo.Cuenta;
-import cajero.modelo.Retiro;
 import cajero.modelo.Transferencia;
 import cajero.modelo.Usuario;
 import java.awt.Color;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -32,6 +31,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         this.pack();
         lblError.setVisible(true);
         this.usuarioSesion = user;
+        setLocationRelativeTo(null);   
         
         txtCuentaDestino.setForeground(Color.GRAY);
         txtCuentaDestino.setText(" Ingresa el número de cuenta destino");
@@ -126,6 +126,11 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         txtCuentaDestino.setBackground(new java.awt.Color(204, 204, 204));
         txtCuentaDestino.setForeground(new java.awt.Color(153, 153, 153));
         txtCuentaDestino.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
+        txtCuentaDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCuentaDestinoKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtCuentaDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 250, 30));
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -163,6 +168,11 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         txtMonto.setBackground(new java.awt.Color(204, 204, 204));
         txtMonto.setForeground(new java.awt.Color(153, 153, 153));
         txtMonto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(142, 182, 155), 1, true));
+        txtMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 250, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 300, 430));
@@ -191,10 +201,10 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        String cuenta = txtCuentaDestino.getText();
+        String numeroDestino = txtCuentaDestino.getText();
         
         // "\\d{8}" significa: solo números y que sean exactamente 8
-        if (!cuenta.matches("\\d{8}")) {
+        if (!numeroDestino.matches("\\d{8}")) {
             lblError.setText("<html>El número de cuenta debe tener exactamente 8 dígitos numéricos.</html>");
             lblError.setVisible(true);
             return;
@@ -202,7 +212,6 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         
         try {
         double monto = Double.parseDouble(txtMonto.getText());
-        String numeroDestino = txtCuentaDestino.getText();
         
         CuentaDAO cuentaDAO = new CuentaDAO();
         Cuenta cuentaDestino = cuentaDAO.buscarCuentaPorNumero(numeroDestino);
@@ -211,20 +220,15 @@ public class PantallaTransferencia extends javax.swing.JFrame {
             usuarioSesion.getCuenta().getId(),
             monto,
             cuentaDestino
-        );
-
-        boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
+        );        
         
-        if (monto < 100) {
+        
+        // Aquí se ejecuta la transferencia y se setea mensajeError si algo falla
+        if (transferencia.ejecutar(usuarioSesion.getCuenta())) {
+            lblError.setText("");
+        } else {
             lblError.setText(transferencia.getMensajeError());
-            return;
         }
-
-        if (monto > usuarioSesion.getCuenta().getSaldo()) {
-            lblError.setText(transferencia.getMensajeError());
-            return;
-        }
-
         
         if (cuentaDestino == null) {
             lblError.setText("Cuenta destino no encontrada.");
@@ -236,7 +240,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
             return;
         }
 
-        
+        boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
         if (exito) {
             double saldoActual = usuarioSesion.getCuenta().getSaldo();
             new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
@@ -247,12 +251,30 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         }
 
     } catch (NumberFormatException e) {
-        lblError.setText("Ingrese valores numéricos válidos.");
+        lblError.setText("Ingrese valores numéricos.");
     }
 
         
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void txtCuentaDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCuentaDestinoKeyTyped
+        char c = evt.getKeyChar();
+
+        // Si no es dígito o ya hay 4 caracteres, se ignora
+        if (!Character.isDigit(c) || txtCuentaDestino.getText().length() >= 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCuentaDestinoKeyTyped
+
+    private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
+        char c = evt.getKeyChar();
+
+        // Si no es dígito o ya hay 4 caracteres, se ignora
+        if (!Character.isDigit(c) || txtMonto.getText().length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMontoKeyTyped
 
     
 

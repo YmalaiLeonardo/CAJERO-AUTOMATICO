@@ -25,10 +25,6 @@ public class Transferencia extends Operacion {
         this.cuentaDestino = cuentaDestino;
     }     
     
-   
-    
-    
-    
     public String getMensajeError() {
         return mensajeError;
     }

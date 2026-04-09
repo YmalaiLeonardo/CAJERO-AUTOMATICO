@@ -23,6 +23,7 @@ public class PantallaComprobante extends javax.swing.JFrame {
         this.setSize(709, 451);
         this.pack();
         this.usuarioSesion = usuarioSesion;
+        setLocationRelativeTo(null);   
         
         
         if (usuarioSesion != null && usuarioSesion.getCorreo() != null) {

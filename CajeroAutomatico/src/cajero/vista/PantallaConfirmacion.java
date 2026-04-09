@@ -12,8 +12,6 @@ import cajero.modelo.Usuario;
 import cajero.servicio.CorreoService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +33,7 @@ public class PantallaConfirmacion extends javax.swing.JFrame {
         this.pack();
         this.usuarioSesion = user;
         this.operacion = operacion;
+        setLocationRelativeTo(null);   
         
         // Si la operación es transferencia, mostrar cuenta destino y titular
         if (operacion instanceof Transferencia) {
