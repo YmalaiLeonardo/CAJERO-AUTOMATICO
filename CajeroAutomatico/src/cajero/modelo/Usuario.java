@@ -2,24 +2,54 @@
 package cajero.modelo;
 
 /**
+ * Clase Usuario
+ * -------------
+ * Representa a un usuario dentro del sistema de cajero automático.
+ * Contiene atributos relacionados con la identidad, credenciales y estado de bloqueo,
+ * además de la relación con la cuenta bancaria asociada.
  *
- * @author ymala
+ * <p>Funciones principales:</p>
+ * - Almacenar información personal del usuario (id, nombre, correo).
+ * - Gestionar credenciales seguras mediante hash y salt del PIN.
+ * - Controlar el estado de bloqueo del usuario.
+ * - Relacionar al usuario con su cuenta bancaria correspondiente.
+ *
+ * @author Ymalai Leonardo
+ * @author Luis Diaz
+ * @author Manuel Alburquerque
+ * @author Starlyn Escalante
+ * @version 1.0.0
  */
 public class Usuario {
-    // Atributos privados que representan los datos del usuario
-    private int id;
-    private String nombre;
-    private String correo;
-    private String numeroCuenta;
-    private String pinHash;
-    private String pinSalt;
-    private boolean bloqueado;
-
     
-    // Constructor vacío
+    // Atributos privados que representan los datos del usuario
+    private int id;                // Identificador único del usuario
+    private String nombre;         // Nombre completo del usuario
+    private String correo;         // Correo electrónico del usuario
+    private String numeroCuenta;   // Número de cuenta asociado
+    private String pinHash;        // Hash del PIN para autenticación segura
+    private String pinSalt;        // Salt utilizado en el hash del PIN
+    private boolean bloqueado;     // Estado de bloqueo del usuario
+
+    private Cuenta cuenta;         // Relación con la cuenta del usuario
+    
+    /**
+     * Constructor vacío.
+     * Permite crear un objeto Usuario sin inicializar atributos.
+     */
     public Usuario() {}
     
-    // Constructor con todos los atributos
+     /**
+     * Constructor con todos los atributos del usuario.
+     *
+     * @param id identificador único del usuario.
+     * @param nombre nombre completo del usuario.
+     * @param correo correo electrónico del usuario.
+     * @param numeroCuenta número de cuenta asociado.
+     * @param pinHash hash del PIN para autenticación.
+     * @param pinSalt salt utilizado en el hash del PIN.
+     * @param bloqueado estado de bloqueo del usuario.
+     */
     public Usuario(int id, String nombre, String correo, String numeroCuenta, 
                    String pinHash, String pinSalt, boolean bloqueado) {
         this.id = id;
@@ -53,9 +83,7 @@ public class Usuario {
     public boolean isBloqueado() { return bloqueado; }
     public void setBloqueado(boolean bloqueado) { this.bloqueado = bloqueado; }
 
-    private Cuenta cuenta; // relación con la cuenta del usuario
     public Cuenta getCuenta() {return cuenta;}
     public void setCuenta(Cuenta cuenta) { this.cuenta = cuenta;}
-        
-    
+            
 }
