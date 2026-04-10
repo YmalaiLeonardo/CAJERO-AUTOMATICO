@@ -14,9 +14,14 @@
  * @version 1.0.0
  */
 package cajero.bd;
-
 import java.sql.Connection;
+
 public class prueba {
+    /**
+     * Método principal que ejecuta las pruebas de conexión.
+     *
+     * @param args argumentos de línea de comandos (no utilizados).
+     */
     public static void main(String[] args) {
         Connection c = ConexionBD.conectar();
         if (c != null) {
