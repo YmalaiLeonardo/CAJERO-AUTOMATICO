@@ -2,8 +2,22 @@
 package cajero.servicio;
 
 /**
+ * Clase CorreoService
+ * -------------------
+ * Maneja el envío de comprobantes de operaciones bancarias por correo electrónico.
+ * Genera mensajes en formato HTML con los detalles de la operación y utiliza
+ * el protocolo SMTP para enviar correos mediante JavaMail.
  *
- * @author ymala
+ * <p>Funciones principales:</p>
+ * - Configurar los parámetros del servidor de correo (host, puerto, correo origen).
+ * - Generar el contenido HTML del comprobante con los datos de la operación.
+ * - Enviar el comprobante al correo electrónico del usuario.
+ *
+ * @author Ymalai Leonardo
+ * @author Luis Diaz
+ * @author Manuel Alburquerque
+ * @author Starlyn Escalante
+ * @version 1.0.0
  */
 import cajero.bd.UsuarioDAO;
 import cajero.modelo.Operacion;
@@ -20,23 +34,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
-// Clase que maneja el envío de comprobantes por correo
-// Por ahora simulada, después se conectará con JavaMail
 public class CorreoService {
     // Datos del servidor de correo
-    // Estos se configurarán cuando se implemente JavaMail
     private String host;
     private int puerto;
     private String correoOrigen;
     
-    // Constructor
+    /**
+     * Constructor que inicializa los parámetros del servidor de correo.
+     * Por defecto se configura para usar Gmail con puerto 587.
+     */
     public CorreoService() {
         this.host = "smtp.gmail.com";
         this.puerto = 587;
         this.correoOrigen = "bancodigital00@gmail.com";
     }
     
-    // Genera el mensaje del comprobante con los datos de la operación
+    /**
+     * Genera el mensaje HTML del comprobante con los datos de la operación.
+     *
+     * @param usuario objeto {@link Usuario} que representa al titular de la cuenta.
+     * @param operacion objeto {@link Operacion} que contiene los detalles de la operación.
+     * @return cadena en formato HTML con el comprobante de la operación.
+     */
     public String generarMensaje(Usuario usuario, Operacion operacion) {
         
         // Formatear la fecha de la operación
@@ -63,9 +83,7 @@ public class CorreoService {
             + "<h2>Detalles de la operación:</h3>";
            
            
-           // Construir tabla según tipo de operación          
-            
-            
+           // Construir tabla según tipo de operación                               
             if (operacion.getTipo().equalsIgnoreCase("TRANSFERENCIA")) {
                 Transferencia transferencia = (Transferencia) operacion;
                 
@@ -96,9 +114,15 @@ public class CorreoService {
         return mensaje;
     }
     
-    // Envía el comprobante al correo del usuario
-    // Por ahora simulado, imprime en consola
-    // Después se reemplazará por JavaMail
+    /**
+     * Envía el comprobante de la operación al correo electrónico del usuario.
+     * Utiliza JavaMail para establecer la conexión SMTP y enviar el mensaje.
+     *
+     * @param usuario objeto {@link Usuario} que recibirá el comprobante.
+     * @param operacion objeto {@link Operacion} que contiene los detalles de la operación.
+     * @return {@code true} si el correo fue enviado exitosamente,
+     *         {@code false} si ocurrió algún error durante el envío.
+     */
     public boolean enviarComprobante(Usuario usuario, Operacion operacion) {
         try {
             Properties props = new Properties();
@@ -123,8 +147,7 @@ public class CorreoService {
             message.setSubject("Comprobante de operación - Banco Digital");
             
             String cuerpo = generarMensaje(usuario, operacion);                     
-            message.setContent(cuerpo, "text/html; charset=UTF-8");
-        
+            message.setContent(cuerpo, "text/html; charset=UTF-8");        
             
             Transport.send(message);
 
