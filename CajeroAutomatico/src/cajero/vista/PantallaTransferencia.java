@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package cajero.vista;
 
 import cajero.bd.CuentaDAO;
@@ -11,10 +8,6 @@ import cajero.modelo.Usuario;
 import java.awt.Color;
 
 
-/**
- *
- * @author ymala
- */
 public class PantallaTransferencia extends javax.swing.JFrame {
 
     /**
@@ -218,16 +211,8 @@ public class PantallaTransferencia extends javax.swing.JFrame {
             usuarioSesion.getCuenta().getId(),
             monto,
             cuentaDestino
-        );        
-        
-        
-        // Aquí se ejecuta la transferencia y se setea mensajeError si algo falla
-        if (transferencia.ejecutar(usuarioSesion.getCuenta())) {
-            lblError.setText("");
-        } else {
-            lblError.setText(transferencia.getMensajeError());
-        }
-        
+        );      
+       
         if (cuentaDestino == null) {
             lblError.setText("Cuenta destino no encontrada.");
             return;
@@ -238,7 +223,19 @@ public class PantallaTransferencia extends javax.swing.JFrame {
             return;
         }
 
-        boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
+        
+        // Aquí se ejecuta la transferencia y se setea mensajeError si algo falla
+        if (transferencia.ejecutar(usuarioSesion.getCuenta())) {
+            lblError.setText("");
+            double saldoActual = usuarioSesion.getCuenta().getSaldo();
+            new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
+            this.dispose();
+        } else {
+            lblError.setText(transferencia.getMensajeError());
+        }
+        
+        
+        /*boolean exito = transferencia.ejecutar(usuarioSesion.getCuenta());
         if (exito) {
             double saldoActual = usuarioSesion.getCuenta().getSaldo();
             new PantallaConfirmacion(transferencia, usuarioSesion, saldoActual).setVisible(true);
@@ -246,7 +243,7 @@ public class PantallaTransferencia extends javax.swing.JFrame {
         } else {
             lblError.setText(transferencia.getMensajeError());
             return;
-        }
+        }*/
 
     } catch (NumberFormatException e) {
         lblError.setText("Ingrese valores numéricos.");
