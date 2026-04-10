@@ -260,7 +260,7 @@ public class PantallaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCuentaKeyTyped
 
     private void lblAcercaDeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAcercaDeMouseClicked
-        JOptionPane.showMessageDialog(null, "Hola");
+        JOptionPane.showMessageDialog(this, "Hola");
     }//GEN-LAST:event_lblAcercaDeMouseClicked
 
     private void lblAcercaDeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblAcercaDeFocusGained

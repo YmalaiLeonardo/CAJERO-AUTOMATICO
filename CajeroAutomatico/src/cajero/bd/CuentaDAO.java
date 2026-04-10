@@ -1,6 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+/**
+ * Clase CuentaDAO
+ * ----------------
+ * Esta clase implementa el acceso a datos (DAO) para la entidad {@link Cuenta}.
+ * Se encarga de realizar operaciones sobre la tabla "cuentas" en la base de datos MySQL,
+ * utilizando consultas SQL a través de JDBC.
+ *
+ * <p>Funciones principales:</p>
+ * - Consultar el saldo actual de un usuario.
+ * - Procesar depósitos y retiros con validaciones de saldo.
+ * - Buscar cuentas por número de cuenta.
+ * - Actualizar el saldo de una cuenta específica.
+ *
+ * @author Ymalai Leonardo 
+ * @author Luis Diaz 
+ * @author Manuel Alburquerque
+ * @author Starlyn Escalante
+ * @version 1.0.0
  */
 package cajero.bd;
 import cajero.modelo.Cuenta;
@@ -8,12 +23,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-/**
- *
- * @author ymala
- */
+
 public class CuentaDAO {
-    // MÉTODO 1: Obtener el saldo actual
+    /**
+     * Obtiene el saldo actual de un usuario.
+     *
+     * @param idUsuario identificador único del usuario.
+     * @return el saldo actual de la cuenta, o 0.0 si ocurre un error.
+     */
     public double obtenerSaldo(int idUsuario) {
         String sql = "SELECT saldo FROM cuentas WHERE id_usuario = ?";
         try (Connection con = ConexionBD.conectar();
@@ -31,7 +48,14 @@ public class CuentaDAO {
         return 0.0;
     }
     
-    // MÉTODO 2: Depositar dinero (Sumar)
+    /**
+     * Procesa un depósito en la cuenta de un usuario.
+     * Suma el monto indicado al saldo actual.
+     *
+     * @param idUsuario identificador único del usuario.
+     * @param monto cantidad a depositar.
+     * @return {@code true} si el depósito fue exitoso, {@code false} en caso contrario.
+     */
     public boolean procesarDeposito(int idUsuario, double monto) {
         String sql = "UPDATE cuentas SET saldo = saldo + ? WHERE id_usuario = ?";
         try (Connection con = ConexionBD.conectar();
@@ -48,9 +72,15 @@ public class CuentaDAO {
         }
     }
     
-   // MÉTODO 3: Retirar dinero (Restar)
+    /**
+     * Procesa un retiro en la cuenta de un usuario.
+     * Solo permite retirar si el saldo es mayor o igual al monto solicitado.
+     *
+     * @param idUsuario identificador único del usuario.
+     * @param monto cantidad a retirar.
+     * @return {@code true} si el retiro fue exitoso, {@code false} en caso contrario.
+     */
     public boolean procesarRetiro(int idUsuario, double monto) {
-        // Solo resta si el saldo es mayor o igual al monto
         String sql = "UPDATE cuentas SET saldo = saldo - ? WHERE id_usuario = ? AND saldo >= ?";
         try (Connection con = ConexionBD.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -67,7 +97,13 @@ public class CuentaDAO {
         }
     }
     
-    // MÉTODO 4: Buscar una cuenta por su número de cuenta
+    /**
+     * Busca una cuenta en la base de datos por su número de cuenta.
+     *
+     * @param numeroCuenta número de cuenta a buscar.
+     * @return un objeto {@link Cuenta} con los datos encontrados,
+     *         o {@code null} si no existe la cuenta.
+     */
     public Cuenta buscarCuentaPorNumero(String numeroCuenta) {
         String sql = "SELECT id, id_usuario, saldo, numeroCuenta FROM cuentas WHERE numeroCuenta = ?";
         try (Connection con = ConexionBD.conectar();
@@ -90,6 +126,13 @@ public class CuentaDAO {
         return null;
     }
     
+    /**
+     * Actualiza el saldo de una cuenta específica.
+     *
+     * @param idCuenta identificador único de la cuenta.
+     * @param nuevoSaldo nuevo valor de saldo a establecer.
+     * @return {@code true} si la actualización fue exitosa, {@code false} en caso contrario.
+     */
     public boolean actualizarSaldo(int idCuenta, double nuevoSaldo) {
         String sql = "UPDATE cuentas SET saldo = ? WHERE id = ?";
         try (Connection con = ConexionBD.conectar();
@@ -103,7 +146,4 @@ public class CuentaDAO {
         }
     }
    
-    
-
-    
 }

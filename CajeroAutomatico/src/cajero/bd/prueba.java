@@ -1,11 +1,20 @@
-
+/**
+ * Clase prueba
+ * ------------
+ * Esta clase permite verificar la conexión con la base de datos MySQL.
+ *
+ * <p>Funciones principales:</p>
+ * - Conectar con la base de datos mediante {@link ConexionBD}.
+ * - Mostrar en consola el estado de la conexión.
+ *
+ * @author Ymalai Leonardo
+ * @author Luis Diaz
+ * @author Manuel Alburquerque
+ * @author Starlyn Escalante
+ * @version 1.0.0
+ */
 package cajero.bd;
 
-/**
- *
- * @author ymala
- */
-import cajero.util.HashUtil;
 import java.sql.Connection;
 public class prueba {
     public static void main(String[] args) {
@@ -15,13 +24,5 @@ public class prueba {
         } else {
             System.out.println("LA CONEXIÓN FALLÓ.");
         }
-        
-        String pin = "2065"; 
-        String salt = HashUtil.generarSalt();
-        String hash = HashUtil.hashPin(pin, salt);
-
-        System.out.println("Copia esto en pin_salt: " + salt);
-        System.out.println("Copia esto en pin_hash: " + hash);
     }   
-    
 }
