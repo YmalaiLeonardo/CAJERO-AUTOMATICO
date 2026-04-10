@@ -6,10 +6,6 @@ import cajero.servicio.AuthService;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author YMALAI DORANGEL LEONARDO RAMON
- */
 public class PantallaLogin extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaLogin.class.getName());
@@ -260,6 +256,7 @@ public class PantallaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCuentaKeyTyped
 
     private void lblAcercaDeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAcercaDeMouseClicked
+        //modificar con el acerca de 
         JOptionPane.showMessageDialog(this, "Hola");
     }//GEN-LAST:event_lblAcercaDeMouseClicked
 

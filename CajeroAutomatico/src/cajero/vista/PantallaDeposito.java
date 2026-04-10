@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package cajero.vista;
 
 import cajero.bd.CuentaDAO;
@@ -9,13 +6,7 @@ import cajero.modelo.Deposito;
 import cajero.modelo.Usuario;
 import java.awt.Color;
 
-/**
- *
- * @author ymala
- */
 public class PantallaDeposito extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaDeposito.class.getName());
 
     /**
      * Creates new form PantallaDeposito

@@ -16,8 +16,6 @@ import java.awt.Color;
  * @author ymala
  */
 public class PantallaTransferencia extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaTransferencia.class.getName());
 
     /**
      * Creates new form PantallaTransferencia
@@ -253,9 +251,6 @@ public class PantallaTransferencia extends javax.swing.JFrame {
     } catch (NumberFormatException e) {
         lblError.setText("Ingrese valores numéricos.");
     }
-
-        
-
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txtCuentaDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCuentaDestinoKeyTyped

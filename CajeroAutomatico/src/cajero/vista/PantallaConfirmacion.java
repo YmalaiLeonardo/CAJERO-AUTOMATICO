@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package cajero.vista;
 
 import cajero.bd.UsuarioDAO;
@@ -13,10 +10,7 @@ import cajero.servicio.CorreoService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- *
- * @author ymala
- */
+
 public class PantallaConfirmacion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaConfirmacion.class.getName());
