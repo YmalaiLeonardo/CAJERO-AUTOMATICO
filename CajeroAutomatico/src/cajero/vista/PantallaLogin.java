@@ -61,6 +61,7 @@ public class PantallaLogin extends javax.swing.JFrame {
             }
         });
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,8 +106,8 @@ public class PantallaLogin extends javax.swing.JFrame {
 
         lblSubtitulo.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         lblSubtitulo.setForeground(new java.awt.Color(0, 0, 0));
-        lblSubtitulo.setText("Bienvenido a tu cajero virtual");
-        panelCentro.add(lblSubtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+        lblSubtitulo.setText("Bienvenido a tu cajero");
+        panelCentro.add(lblSubtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         lblCuenta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCuenta.setForeground(new java.awt.Color(0, 0, 0));
@@ -161,6 +162,11 @@ public class PantallaLogin extends javax.swing.JFrame {
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(this::btnIngresarActionPerformed);
+        btnIngresar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnIngresarKeyPressed(evt);
+            }
+        });
         panelCentro.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
         lblError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -190,7 +196,7 @@ public class PantallaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCuentaActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-
+        
         String cuenta = txtCuenta.getText();
         String pin = new String(txtPin.getPassword()); // Para JPasswordField
 
@@ -263,6 +269,10 @@ public class PantallaLogin extends javax.swing.JFrame {
     private void lblAcercaDeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblAcercaDeFocusGained
         
     }//GEN-LAST:event_lblAcercaDeFocusGained
+
+    private void btnIngresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnIngresarKeyPressed
+        
+    }//GEN-LAST:event_btnIngresarKeyPressed
 
     /**
      * @param args the command line arguments

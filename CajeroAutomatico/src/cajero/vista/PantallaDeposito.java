@@ -70,6 +70,7 @@ public class PantallaDeposito extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cajero Automatico");
 
         jPanel1.setBackground(new java.awt.Color(5, 31, 32));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
