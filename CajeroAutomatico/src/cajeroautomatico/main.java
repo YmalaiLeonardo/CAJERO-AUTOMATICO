@@ -29,7 +29,7 @@ public class main {
      * de mostrar la primera ventana de la interfaz gráfica. En este caso, 
      * se instancia y se hace visible la pantalla de login.</p>
      * 
-     * @param args los argumentos de la línea de comandos (no utilizados en este proyecto)
+     * @param args los argumentos de la línea de comandos 
      */
     public static void main(String[] args) {
         // Aquí decides qué pantalla mostrar primero
