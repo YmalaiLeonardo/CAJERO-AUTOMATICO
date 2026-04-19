@@ -48,6 +48,4 @@ src/
 - Starlyn Escalante
 
 ## 📅 Fecha
-Abril 2026
-
-ITLA - Programación I - 2026
+ITLA - Programación I - Abril 2026
