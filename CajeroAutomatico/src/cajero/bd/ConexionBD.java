@@ -34,7 +34,7 @@ import java.sql.SQLException;
 public class ConexionBD {
     // Datos de tu base de datos local
     private static final String DATABASE = "cajeroautomatico_db";
-    private static final String URL = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false";
+    private static final String URL = "jdbc:mysql://localhost:3306/" + DATABASE + "?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USER = "root"; 
     private static final String PASSWORD = "123456789"; 
 
