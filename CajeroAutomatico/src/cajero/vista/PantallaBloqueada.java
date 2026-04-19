@@ -92,7 +92,7 @@ public class PantallaBloqueada extends javax.swing.JFrame {
 
         lblEmail.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(0, 0, 0));
-        lblEmail.setText("📧 Email: soporte@bancodigital.com  ");
+        lblEmail.setText("📧 Email: bancodigital00@gmail.com  ");
 
         lblHorario.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         lblHorario.setForeground(new java.awt.Color(0, 0, 0));

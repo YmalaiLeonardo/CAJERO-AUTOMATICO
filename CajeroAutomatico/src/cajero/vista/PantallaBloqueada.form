@@ -239,7 +239,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="\ud83d\udce7 Email: soporte@bancodigital.com  " containsInvalidXMLChars="true"/>
+                    <Property name="text" type="java.lang.String" value="\ud83d\udce7 Email: bancodigital00@gmail.com  " containsInvalidXMLChars="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblHorario">
