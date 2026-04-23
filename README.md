@@ -42,10 +42,10 @@ src/
 ```
 
 ## 👥 Créditos
-- Ymalai Leonardo
-- Luis Diaz
-- Manuel Alburquerque
-- Starlyn Escalante
+- Ymalai Leonardo - Líder del Equipo
+- Luis Diaz - DBA (Administrador de BD)
+- Manuel Alburquerque - SQA y Diseño
+- Starlyn Escalante - SQA y Diseño
 
 ## 📅 Fecha
 ITLA - Programación I - Abril 2026
