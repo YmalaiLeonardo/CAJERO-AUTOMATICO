@@ -11,7 +11,7 @@ Sistema de cajero automático desarrollado en Java con interfaz gráfica Swing. 
 - Envío de comprobante al correo registrado
 - Interfaz gráfica moderna con Java Swing
 
-## 📦 Requisitos
+## 📦 Requisitos funcionales del sistema
 - Java JDK 8 o superior
 - NetBeans IDE
 - MySQL 8.0 o superior

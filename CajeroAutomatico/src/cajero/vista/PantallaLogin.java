@@ -266,16 +266,7 @@ public class PantallaLogin extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Cajero Automatico v1.0.0\n" +              
                 "\n" +
                 "Proposito: Sistema de simulación bancaria diseñado para gestionar transacciones seguras (depósitos, retiros y transferencias) y envío de comprobantes digitales mediante correo electronicos. \n" +
-                "\n" +
-                "Instructivo de uso:\n" +
-                "\n" +
-                "Ingreso: Introduce tus credenciales en la pantalla de Login (Cuenta y PIN).\n" +
-                "\n" +
-                "Menu: Selecciona la operación deseada (Retiro, Depósito o Transferencia).\n" +
-                "\n" +
-                "Operación: Sigue las instrucciones en pantalla y confirma el monto.\n" +
-                "\n" +
-                "Recibo: Al finalizar, el sistema enviará un comprobante automático a tu correo registrado en la plataforma del banco.\n" +
+               
                 "\n" +
                 "Equipo de Desarrollo de Software: Luis Kevin Diaz, Starlyn Escalante, Ymalai Leonardo y Manuel Alburquerque.");
     }//GEN-LAST:event_lblAcercaDeMouseClicked

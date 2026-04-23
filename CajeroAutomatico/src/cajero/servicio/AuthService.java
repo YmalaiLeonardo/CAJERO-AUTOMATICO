@@ -63,7 +63,7 @@ public class AuthService {
         );
 
         if (pinCorrecto) {
-            // Si el PIN es correcto, reinicia intentos y desbloquea
+            // Si el PIN es correcto ingresa
             usuarioDAO.resetearIntentos(usuario.getId());
             usuarioDAO.actualizarEstadoBloqueo(usuario.getId(), false); 
             usuario.setBloqueado(false); 
